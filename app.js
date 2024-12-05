@@ -147,10 +147,31 @@
             if(!value)return;
             if(value.startsWith("_")){//put here only buttons that have one of num or num2
                 switch (value) {
+                    case "_DRG2":
+                        
+                        equalButton(); 
+                        let value2=""   
+                        const [start2, end2] = [screen.selectionStart, screen.selectionEnd];
+                        
+                    
+                        switch(drg.innerHTML){
+                            case "RAD"://RAD to GRAD
+                                value2="*200/pi";
+                                break;
+                            case "DEG"://DEG to RAD
+                                value2="*pi/180";
+                                break;
+                            case "GRAD"://GRAD TO DEG
+                                value2="*180/200"
+                                break;    
+                        }
+                        screen.setRangeText(value2, start2, end2);
+                        screen.selectionEnd+=value2.length;
+                        screen.selectionStart=screen.selectionEnd
+                        equalButton();
+                        //missing break fallthrough on purpose
                     case "_DRG":
                         switch(drg.innerHTML){
-                            case "2nd":
-                                break;
                             case "RAD":
                                 drg.innerHTML="GRAD";
                                 break;
@@ -166,9 +187,6 @@
                         break;
                     case "_HYP":
                         //alert("hyperbolicus not yet implemented")
-                        break;
-                    case "_DRG2":
-                        alert("convert drg not yet implemented")
                         break;
                     case "_CLR":
                         clearButton();
@@ -204,19 +222,11 @@
                         }
                         break;
                     case "_M+":
-                        alert("M+");
-                        break;
                     case "_M-":
-                        alert("M-");
-                        break;
                     case "_MC":
-                        alert("MC");
-                        break;
                     case "_MR":
-                        alert("MR");
-                        break;
                     default:
-                        console.log("unimplemented "+value)
+                        alert("unimplemented "+value)
                 }
                 screen.focus();
                 return;
@@ -290,15 +300,14 @@
                 screen.value=screen.value.replace(/log/ig, 'log')
                 screen.value=screen.value.replace(/sqrt/ig, 'sqrt')
                 
-                //replace % by e-2
-                screen.value=screen.value.replace(/\%/g, 'e-2')
+
                 //erase beggining and trailing spaces
                 screen.value=screen.value.replace(/^\s+|\s+$/g, '')
                 //erase double spaces
                 screen.value=screen.value.replace(/\s{2,}/g, " ");
                 //erase spaces before closing brackets
                 screen.value=screen.value.replace(/\s\)/g, ')')
-                //erase spaces before closing brackets
+                //erase spaces before opening brackets
                 screen.value=screen.value.replace(/\(\s/g, '(')
                 //erase spaces before and after trigonometric expressiones
                 screen.value=screen.value.replace(/\s*\*\s*/g, '*')
@@ -306,10 +315,14 @@
                 screen.value=screen.value.replace(/\s*\+\s*/g, '+')
                 screen.value=screen.value.replace(/\s*-\s*/g, '-')
                 screen.value=screen.value.replace(/\s*\!/g, '!')
+                screen.value=screen.value.replace(/\s*\^\s*/g, '^')
                 //replace spaces with *
                 screen.value=screen.value.replace(/\s+/g, '*');
-                screen.value=screen.value.replace(/\^/g, '**')
                 lastinput=screen.value;
+
+                //replace % by e-2
+                screen.value=screen.value.replace(/\%/g, 'e-2')
+                screen.value=screen.value.replace(/\^/g, '**')
                 screen.value=treatfac(screen.value)
                 console.log("cleaned formula:"+screen.value);
                 let answer = eval(`
@@ -370,7 +383,9 @@
             } catch (error) {
                 screen.value+=")";
                 if (iter <10) {
+                    let thisinput=lastinput;
                     if(equalButton(iter+1)) return true;
+                    lastinput=thisinput;
                 }
                 screen.value = "Error"+error;
                 screen.focus();
