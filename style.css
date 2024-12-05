@@ -27,9 +27,10 @@ body{
     overflow: hidden;
 }
 
-small{
+small:not(.btn-2nd){
     font-size: 2.2vw;
     color:rgb(245, 146, 62);
+    pointer-events:none;
 }
 form input{
 
@@ -75,10 +76,9 @@ button{
 }
 
 .btn-2nd{
-    background:  rgb(60, 37, 17);
-    color: rgb(245, 146, 62);
+    background:  rgb(245, 146, 62);
+    color:#fff;
 }
-
 .btn-arit{
     background: rgb(36, 129, 141);
     color: #fff
@@ -94,10 +94,6 @@ button{
     color: #fff
 }
 
-.btn-sol{
-    background: green;
-    color: #fff
-}
 .btn-drg{
     background: black;
     color: #fff
@@ -111,6 +107,10 @@ button{
     color: #fff
 }
 .btn-del{
+    background: red;
+    color: #fff
+}
+.btn-back{
     background: red;
     color: #fff
 }
