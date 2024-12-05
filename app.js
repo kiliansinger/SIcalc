@@ -1,6 +1,7 @@
 
 
 (function() {
+   
     function fac(num)
     {
         var rval=1;
@@ -8,8 +9,64 @@
             rval = rval * i;
         return rval;
     }
-    function SIN(val){
-        return Math.sin(val);
+    function convertDRG(val){
+        switch(drg.innerHTML){
+            case "RAD": return val;
+            case "DEG": return val*Math.PI/180.;
+            case "GRAD": return val*Math.PI/200.
+        }
+    }
+    function invConvertDRG(val){
+        switch(drg.innerHTML){
+            case "RAD": return val;
+            case "DEG": return val*180./Math.PI;
+            case "GRAD": return val*200/Math.PI;
+        }
+    }
+    function sin(val){     
+        return Math.sin(convertDRG(val));
+    }
+    function cos(val){     
+        return Math.cos(convertDRG(val));
+    }
+    function tan(val){     
+        return Math.tan(convertDRG(val));
+    }
+    function asin(val){     
+        return invConvertDRG(Math.asin(val));
+    }
+    function acos(val){     
+        return invConvertDRG(Math.acos(val));
+    }
+    function atan(val){     
+        return invConvertDRG(Math.atan(val));
+    }
+    function sinh(val){     
+        return Math.sinh(val);
+    }
+    function cosh(val){     
+        return Math.cosh(val);
+    }
+    function tanh(val){     
+        return Math.tanh(val);
+    }
+    function asinh(val){     
+        return Math.asinh(val);
+    }
+    function acosh(val){     
+        return Math.acosh(val);
+    }
+    function atanh(val){     
+        return Math.atanh(val);
+    }
+    function ln(val){
+        return Math.log(val);
+    }
+    function log10(val){
+        return Math.log10(val);
+    }
+    function sqrt(val){
+        return Math.sqrt(val);
     }
     function isAlphaNumeric(str) {
         var code, i, len;
@@ -48,30 +105,87 @@
         return ret;
     }
     let lastinput="";
+    let sol="";
     let screen = document.querySelector('.screen');
     let buttons = document.querySelectorAll('.btn');
-    let clear = document.querySelector('.btn-clear');
-    let equal = document.querySelector('.btn-equal');
     let inv= document.querySelector('.btn-2nd');
-    let back = document.querySelector('.btn-back');
-    let hyp = document.querySelector('.btn-hyp');
-    let drg = document.querySelector('.btn-hyp');
+    let hyp= document.querySelector('.btn-hyp');
+    let drg=document.querySelector('.DRG')
+    let form=document.querySelector('[name="inputform"]');
+    
+    form.addEventListener('submit',handle);
 
+    function handle(event) { 
+        equalButton();
+    } 
+  
+
+   
     // Log initial elements
     console.log('Screen element:', screen);
     console.log('Buttons:', buttons);
-    console.log('Clear button:', clear);
-    console.log('Equal button:', equal);
     inv.className = "btn-2nd";
+    hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
            
-            let value;
-            if(inv.className == "btn-2nd") value = e.target.dataset.num;
-            else value = e.target.dataset.num2;
-            inv.className = "btn-2nd";
+            let value=undefined;
+         
+            if(hyp.className == "btn-hyp-active"){
+                if(inv.className == "btn-2nd") value = e.target.dataset.numh;
+                else value = e.target.dataset.numh2;
+            }
+            if(value==undefined){
+                if(inv.className == "btn-2nd") value = e.target.dataset.num;
+                else value = e.target.dataset.num2;
+            }
+
+            if(value!="_HYP" && value!="_2nd") {
+                inv.className = "btn-2nd";
+                hyp.className = "btn-hyp";
+            }
+            if(!value)return;
             if(value.startsWith("_")){//put here only buttons that have one of num or num2
                 switch (value) {
+                    case "_DRG":
+                        switch(drg.innerHTML){
+                            case "2nd":
+                                break;
+                            case "RAD":
+                                drg.innerHTML="GRAD";
+                                break;
+                            case "DEG":
+                                drg.innerHTML="RAD";
+                                break;
+                            case "GRAD":
+                                drg.innerHTML="DEG";
+                                break;    
+                        }
+                        break;
+                    case "_2nd":
+                        break;
+                    case "_HYP":
+                        //alert("hyperbolicus not yet implemented")
+                        break;
+                    case "_DRG2":
+                        alert("convert drg not yet implemented")
+                        break;
+                    case "_CLR":
+                        clearButton();
+                        break;
+                    case "_BACK":
+                        backButton();
+                        break;
+                    case "_EQ":
+                        equalButton();
+                        break;
+                    case "_SOL":
+                        const [start, end] = [screen.selectionStart, screen.selectionEnd];
+                        screen.setRangeText(sol, start, end);
+                        screen.selectionEnd+=sol.length;
+                        screen.selectionStart=screen.selectionEnd
+                        screen.focus();
+                        break;
                     case "_U":
                         screen.value=lastinput;
                         screen.focus();
@@ -89,12 +203,20 @@
                             
                         }
                         break;
+                    case "_M+":
+                        alert("M+");
+                        break;
+                    case "_M-":
+                        alert("M-");
+                        break;
                     case "_MC":
                         alert("MC");
                         break;
                     case "_MR":
                         alert("MR");
                         break;
+                    default:
+                        console.log("unimplemented "+value)
                 }
                 screen.focus();
                 return;
@@ -125,9 +247,24 @@
                 console.log('Screen value:', screen.value); // Debug log
             }
         });
+    });//end of buttons.forEach(function(button)
+    //needs to come after the above buttons.forEach(function(button)...
+    inv.addEventListener('click', function(e) {
+        console.log('inv button clicked'+inv.className); // Debug log
+        if(inv.className == "btn-2nd")  inv.className="btn-2nd-active";
+        else inv.className="btn-2nd";
+        screen.focus();
+        console.log('inv button clicked'+inv.className); // Debug log
     });
-
-    equal.addEventListener('click', function(e) {
+    hyp.addEventListener('click', function(e) {
+        console.log('hyp button clicked'+hyp.className); // Debug log
+        if(hyp.className == "btn-hyp")  hyp.className="btn-hyp-active";
+        else hyp.className="btn-hyp";
+        screen.focus();
+    });
+    function equalButton(iter) {
+        if(iter===undefined) iter=0;
+       
         console.log('Equal button clicked'); // Debug log
         if (screen.value === '') {
             screen.value = "Please use buttons or keyboard";
@@ -136,6 +273,25 @@
         } else {
             try {
                 //screen.value=screen.value.replaceAll(" ","*");
+                //replace all functions by lowercase;
+                screen.value=screen.value.replace(/sin/ig, 'sin')
+                screen.value=screen.value.replace(/cos/ig, 'cos')
+                screen.value=screen.value.replace(/tan/ig, 'tan')
+                screen.value=screen.value.replace(/asin/ig, 'asin')
+                screen.value=screen.value.replace(/acos/ig, 'acos')
+                screen.value=screen.value.replace(/atan/ig, 'atan')
+                screen.value=screen.value.replace(/sinh/ig, 'sinh')
+                screen.value=screen.value.replace(/cosh/ig, 'cosh')
+                screen.value=screen.value.replace(/tanh/ig, 'tanh')
+                screen.value=screen.value.replace(/asinh/ig, 'asinh')
+                screen.value=screen.value.replace(/acosh/ig, 'acosh')
+                screen.value=screen.value.replace(/atanh/ig, 'atanh')
+                screen.value=screen.value.replace(/ln/ig, 'ln')
+                screen.value=screen.value.replace(/log/ig, 'log')
+                screen.value=screen.value.replace(/sqrt/ig, 'sqrt')
+                
+                //replace % by e-2
+                screen.value=screen.value.replace(/\%/g, 'e-2')
                 //erase beggining and trailing spaces
                 screen.value=screen.value.replace(/^\s+|\s+$/g, '')
                 //erase double spaces
@@ -188,6 +344,7 @@
                     kat=mol/s;
 
                     pi=Math.PI;
+                    E=Math.E;
                     c=299792458*m/s;
                     h=6.62607015e-34*J*s;
                     hb=h/2/pi;
@@ -207,32 +364,34 @@
                     u=1.66053906892e-27*kg;
                 `+screen.value);
                 screen.value = answer;
+                sol=screen.value;
                 console.log('Calculation result:', answer); // Debug log
+                return true;
             } catch (error) {
-                screen.value = "Error";
+                screen.value+=")";
+                if (iter <10) {
+                    if(equalButton(iter+1)) return true;
+                }
+                screen.value = "Error"+error;
                 screen.focus();
-            screen.select();
+                screen.select();
                 console.log('Calculation error:', error); // Debug log
             }
         }
         screen.focus();
-    });
+    };
 
-    clear.addEventListener('click', function(e) {
+  
+    function clearButton() {
         console.log('Clear button clicked'); // Debug log
         screen.value = "";
         screen.focus();
-    });
-    inv.addEventListener('click', function(e) {
-        console.log('inv button clicked'); // Debug log
-        inv.className = "btn-2nd-active";
-        screen.focus();
-    });
-    back.addEventListener('click', function(e) {
+    }
+  
+   function backButton()  {
         console.log('back button clicked'); // Debug log
         const [start, end] = [screen.selectionStart, screen.selectionEnd];
         screen.setRangeText("", start-1, end);
-        
         screen.focus();
-    });
+    }
 })();

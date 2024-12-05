@@ -8,21 +8,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body> 
-    <form>
-        <input type ="text" class="screen">
-    </form>
- 
+    <section class="topdisplay">
+        <p class="DRG">RAD</p>
+        <form name="inputform" action="#">
+            <input type ="text" class="screen">
+        </form>
+    </section>
     <section class="keyboard">
         
 
         <section class="calculator">
         
             <div class ="button">
-                <button type="button" class ="btn btn-unit" data-num2=" K " data-num=" s "><small>K</small><br/>s</button>
-                <button type="button" class ="btn btn-unit" data-num2=" cd " data-num=" m "><small>cd</small><br/>m</button>
+                <button type="button" class ="btn btn-unit" data-num2=" A " data-num=" s "><small>A</small><br/>s</button>
+                <button type="button" class ="btn btn-unit" data-num2=" K " data-num=" m "><small>K</small><br/>m</button>
                 <button type="button" class ="btn btn-unit" data-num2=" kg " data-num="_U"><small>kg</small><br/>&#x25B2;</button>
-                <button type="button" class ="btn btn-unit" data-num2=" A " data-num="_L" ><small>K</small><br/>&#x25C0;</button>
-                <button type="button" class ="btn btn-unit" data-num2=" mol " data-num="_R"><small>cd</small><br/>&#x25B6;</button>
+                <button type="button" class ="btn btn-unit" data-num2=" mol " data-num="_L" ><small>mol</small><br/>&#x25C0;</button>
+                <button type="button" class ="btn btn-unit" data-num2=" cd " data-num="_R"><small>cd</small><br/>&#x25B6;</button>
 
                 <button type="button" class ="btn btn-unit2" data-num2=" Wb " data-num=" N "><small>Wb</small><br/>N</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" T " data-num=" Hz "><small>T</small><br/>Hz</button>
@@ -36,23 +38,23 @@
                 <button type="button" class ="btn btn-unit2" data-num2=" S " data-num=" Ohm " ><small>S</small><br/>Ohm</button>
                 <button type="button" class ="btn btn-unit2" data-num=" kat " >kat</button>
 
-                <button type="button" class ="btn btn-drg"><small>DRG&#x25B6;</small><br/>DRG</button>
-                <button type="button" class ="btn btn-hyp">HYP</button>
-                <button type="button" class ="btn btn-fn" data-num=" SIN(" data-num2=" asin("><small>asin</small></br>sin</button>
-                <button type="button" class ="btn btn-fn" data-num=" COS(" data-num2=" acos("><small>acos</small></br>cos</button>
-                <button type="button" class ="btn btn-fn" data-num=" TAN(" data-num2=" atan("><small>atan</small></br>tan</button>
+                <button type="button" class ="btn btn-fn" data-num2="_DRG2" data-num="_DRG"><small>DRG&#x25B6;</small><br/>DRG</button>
+                <button type="button" class ="btn btn-hyp"data-num2="_HYP" data-num="_HYP">HYP</button>
+                <button type="button" class ="btn btn-fn" data-numh=" sinh(" data-numh2=" asinh(" data-num=" sin(" data-num2=" asin("><small>asin</small></br>sin</button>
+                <button type="button" class ="btn btn-fn" data-numh=" cosh(" data-numh2=" acosh(" data-num=" cos(" data-num2=" acos("><small>acos</small></br>cos</button>
+                <button type="button" class ="btn btn-fn" data-numh=" tanh(" data-numh2=" atanh(" data-num=" tan(" data-num2=" atan("><small>atan</small></br>tan</button>
 
                 <button type="button" class ="btn btn-fn" data-num2=" E " data-num=" pi "><small>E</small><br/>&pi;</button>
-                <button type="button" class ="btn btn-fn" data-num2=" LN(" data-num=" E^"><small>LN</small><br/>E<sup>x</sup></button>
-                <button type="button" class ="btn btn-fn" data-num2=" LOG(" data-num=" 10^"><small>LOG<sub>10</sub></small><br/>10<sup>x</sup></button>
+                <button type="button" class ="btn btn-fn" data-num2=" ln(" data-num=" E^"><small>ln</small><br/>E<sup>x</sup></button>
+                <button type="button" class ="btn btn-fn" data-num2=" log(" data-num=" 10^"><small>log<sub>10</sub></small><br/>10<sup>x</sup></button>
                 <button type="button" class ="btn btn-fn" data-num2=" sqrt(" data-num="^2"><small><sup>2</sup>&radic;</small><br/>x<sup>2</sup></button>
                 <button type="button" class ="btn btn-fn" data-num2="^(1/" data-num="^"><small><sup>x</sup>&radic;y</small><br/>y<sup>x</sup></button>
                 
-                <button type="button" class ="btn btn-2nd"><small class ="btn-2nd">2nd</small><br/>&nbsp;</button>
+                <button type="button" class ="btn btn-2nd" data-num2="_2nd"  data-num="_2nd"><small class ="btn-2nd">2nd</small><br/>&nbsp;</button>
                 <button type="button" class ="btn btn-fn" data-num2="_M+" data-num=" 1/"><small>M+</small><br/>1/x</button>
                 <button type="button" class ="btn btn-fn" data-num2="_M-" data-num="!"><small>M-</small><br/>x!</button>
-                <button type="button" class ="btn btn-back" data-num2="_MR"><small>MR</small><br/>&#x232B;</button>
-                <button type="button" class ="btn btn-clear" data-num2="_MC"><small>MC</small><br/>CLR</button>             
+                <button type="button" class ="btn btn-red" data-num2="_MR" data-num="_BACK"><small>MR</small><br/>&#x232B;</button>
+                <button type="button" class ="btn btn-red" data-num2="_MC" data-num="_CLR"><small>MC</small><br/>CLR</button>             
                 
                 <button type="button" class ="btn btn-grey" data-num2=" c " data-num="7"><small>c</small><br/>7</button>
                 <button type="button" class ="btn btn-grey" data-num2=" h " data-num="8"><small>h</small><br/>8</button>
@@ -77,7 +79,7 @@
                 <button type="button" class ="btn btn-grey" data-num2=" u " data-num="."><small>u</small><br/>.</button>
                 <button type="button" class ="btn btn-fn" data-num="*10^">x10<sup>x</sup></button>
                 <button type="button" class ="btn btn-arit" data-num="%">%</button>
-                <button type="button" class ="btn btn-equal"><small>SOL</small><br/>=</button>
+                <button type="button" class ="btn btn-equal" data-num2="_SOL" data-num="_EQ"><small>SOL</small><br/>=</button>
                 
 
 

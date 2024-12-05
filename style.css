@@ -5,11 +5,32 @@
 }
 body{
 
-    background: white;
+    background:black;
     justify-content: center;
     align-items: center;
 }
-
+.topdisplay{display: flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+.DRG{
+    flex:max-content;
+    height: 100%;
+    font-size:2.2vw;
+    color:lightgreen;
+}
+form input{
+    width:90vw;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    font-size:4vw;
+    color: #fff;
+    background: #000;
+    text-align: right;
+    /*pointer-events: none;*/
+    padding: 0.6rem;
+}
 .keyboard{
     min-height: 10vh;
     background: white;
@@ -32,19 +53,7 @@ small:not(.btn-2nd){
     color:rgb(245, 146, 62);
     pointer-events:none;
 }
-form input{
 
-    width:100%;
-    height: 10%;
-    border: none;
-    border-radius: 12px;
-    font-size:4vw;
-    color: #fff;
-    background: #000;
-    text-align: right;
-    /*pointer-events: none;*/
-    padding: 0.6rem;
-}
 
 .button{
     display: flex;
@@ -93,8 +102,7 @@ button{
     background: green;
     color: #fff
 }
-
-.btn-drg{
+.btn-fn{
     background: black;
     color: #fff
 }
@@ -102,20 +110,11 @@ button{
     background: black;
     color: #fff
 }
-.btn-fn{
-    background: black;
-    color: #fff
+.btn-hyp-active{
+    background: #fff;
+    color:black;
 }
-.btn-del{
-    background: red;
-    color: #fff
-}
-.btn-back{
-    background: red;
-    color: #fff
-}
-
-.btn-clear{
+.btn-red{
     background: red;
     color: #fff
 }
