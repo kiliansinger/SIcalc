@@ -57,7 +57,7 @@
     mn=1.67492750056e-27*kg;
     a0=hb/(alpha*me*c);
     Ryd=alpha**2*me*c/(2*h);
-    Na=6.02214076e23/mol;
+    NA=6.02214076e23/mol;
     u=1.66053906892e-27*kg;
     R=Na*kb;
     `;
@@ -232,9 +232,7 @@
         }else return [true,0];
       
     }
-  
 
-   
     // Log initial elements
     console.log('Screen element:', screen);
     console.log('Buttons:', buttons);
@@ -361,8 +359,6 @@
                             if(!error){
                                 if(unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
                                 else screen.value = sol+" "+res;
-                                
-
                                 screen.focus();
                             }else{
                             screen.value = "Unit error"
