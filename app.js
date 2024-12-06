@@ -164,6 +164,7 @@
         }
         return ret;
     }
+    let mem=0;
     let lastbutton=undefined;
     let lastinput="";
     let sol="";
@@ -284,9 +285,25 @@
                         }
                         break;
                     case "_M+":
+                        equalButton();
+                        mem+=parseFloat(sol);;
+                        break
                     case "_M-":
+                        equalButton();
+                        mem-=parseFloat(sol);
+                        break
                     case "_MC":
-                    case "_MR":
+                        mem=0;
+                        break;
+                    case "_MR":{
+                            const [start, end] = [screen.selectionStart, screen.selectionEnd];
+                            screen.setRangeText(mem.toString(), start, end);
+                            screen.selectionEnd+=mem.toString().length;
+                            screen.selectionStart=screen.selectionEnd
+                            screen.focus();
+                        }
+                        break;
+
                     case "_units":
                         if(lastbutton!="_EQ") equalButton();
                         let ans= eval(
@@ -326,7 +343,7 @@
                         if(!error){
                             let res=exp.reduce((accu, val, i)=>{
                                 if(Math.abs(val)<1e-15) return accu;
-                                return accu+SI[i]+"^"+Math.round(val)+" ";
+                                return accu+SI[i]+((Math.round(val)>1||Math.round(val)<0)?("^"+Math.round(val)):"")+" ";
                             },"")
                             
                             
