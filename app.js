@@ -59,7 +59,7 @@
     Ryd=alpha**2*me*c/(2*h);
     NA=6.02214076e23/mol;
     u=1.66053906892e-27*kg;
-    R=Na*kb;
+    R=NA*kb;
     `;
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
