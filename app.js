@@ -67,6 +67,7 @@
         map((v)=>{return {key:calcUnit(v)[1],value:v}});
     
     const unitsmap = new Map(unitsarr.map((obj) => [obj.key, obj.value]));
+    console.log(unitsmap)
     function fac(num)
     {
         var rval=1;
@@ -206,10 +207,16 @@
                 units+consts+
                 cleanedformula);
         } );
+        console.log(ans2)
+        
         let exp=ans10.map((val,i)=>{
             return Math.log(val/ans)/10;
-        })  
+        })
+        console.log(exp)
+      
+
         let error=false;
+    
         for(i in exp){
             if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
                 error=true;
@@ -228,6 +235,8 @@
     }
 
     // Log initial elements
+    console.log('Screen element:', screen);
+    console.log('Buttons:', buttons);
     inv.className = "btn-2nd";
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
@@ -346,11 +355,10 @@
                         break;
 
                     case "_units":
-                        if(lastbutton!="_EQ") equalButton();
-                        if(sol==0) break;
                         if(lastbutton!="_units") convertbuttontoggle=true;
                         else convertbuttontoggle=!convertbuttontoggle;
                         if(lastbutton!="_EQ") equalButton();
+                        
                         [error,res]=calcUnit(cleanedformula);     
                         if(!error){
                             if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
