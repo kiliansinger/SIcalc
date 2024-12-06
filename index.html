@@ -4,10 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+    <title>SIcalc</title>
     <link rel="stylesheet" href="style.css">
+    
+   
+	<link rel="manifest" href="./manifest.json" />
+	<meta name="description" content="SIcalc" />
+	<meta name="theme-color" content="#2F3BA2" />
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="apple-mobile-web-app-title" content="SIcalc" />
+	<link rel="apple-touch-icon" href="./images/icons/icon-152x152.png" />
+
+	<link rel="icon" type="image/png" href="./images/favicon.png" />
+	
+	<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-store">
+
 </head>
 <body> 
+    <noscript>
+		<div>Oops! Javascript required here! Allow it and try again!</div>
+	</noscript>
+
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", () => {
+				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
+					console.log("Service worker registered.", reg);
+				});
+			});
+		}
+	</script>
+    
     <section class="topdisplay">
         <p class="DRG">RAD</p>
         <form name="inputform" action="#">
@@ -36,7 +67,7 @@
                 <button type="button" class ="btn btn-unit2" data-num2=" Gy " data-num=" V "><small>Gy</small><br/>V</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" Sv " data-num=" F "><small>Sv</small><br/>F</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" S " data-num=" Ohm " ><small>S</small><br/>Ohm</button>
-                <button type="button" class ="btn btn-unit2" data-num2=" kat " data-num="_convert"><small>kat</small><br/>CONVERT</button>
+                <button type="button" class ="btn btn-unit2" data-num2=" kat " data-num="_units"><small>kat</small><br/>UNITS</button>
 
                 <button type="button" class ="btn btn-fn" data-num2="_DRG2" data-num="_DRG"><small>DRG&#x25B6;</small><br/>DRG</button>
                 <button type="button" class ="btn btn-hyp"data-num2="_HYP" data-num="_HYP">HYP</button>
@@ -78,7 +109,7 @@
                 <button type="button" class ="btn btn-grey" data-num2=" NA " data-num="0"><small>N<sub>A</sub></small><br/>0</button>
                 <button type="button" class ="btn btn-grey" data-num2=" u " data-num="."><small>u</small><br/>.</button>
                 <button type="button" class ="btn btn-fn" data-num="*10^">x10<sup>x</sup></button>
-                <button type="button" class ="btn btn-arit" data-num="%">%</button>
+                <button type="button" class ="btn btn-arit" data-num2="R" data-num="%"><small>R</small><br/>%</button>
                 <button type="button" class ="btn btn-equal" data-num2="_SOL" data-num="_EQ"><small>SOL</small><br/>=</button>
                 
 

@@ -1,7 +1,67 @@
 
 
 (function() {
-   
+    let SI=["kg","A","m","s","mol","K","cd"];
+    function setSIUnits(pos,exp){
+        let s="";
+        for(i in SI){
+            if(i==pos) s+=SI[i]+"=Math.E**"+exp+";"
+            else s+=SI[i]+"=Math.E;"
+        }
+        return s;
+    }
+
+    function setSIUnitsTo1(){
+        let s="";
+        for(i in SI){
+            s+=SI[i]+"=1;"
+        }
+        return s;
+    }
+    let unitsandconsts=`
+    N=kg*m/s**2;
+    Hz=1/s;
+    Pa=N/m**2;
+    J=N*m;
+    W=J/s;
+
+    C=A*s;
+    V=W/A;
+    F=C/V;
+    Ohm=V/A;
+    S=A/V;
+
+    Wb=V*s;
+    T=Wb/m**2;
+    H=Wb/A;
+    lm=cd;
+    lx=lm/m**2;
+    Bq=1/s;
+    Gy=J/kg;
+    Sv=J/kg;
+    kat=mol/s;
+
+    pi=Math.PI;
+    E=Math.E;
+    c=299792458*m/s;
+    h=6.62607015e-34*J*s;
+    hb=h/2/pi;
+    kb=1.380649e-23*J/K;
+    G=6.67430e-11*m**3/kg/s**2;
+    sigma=pi**2*kb**4/(60*hb**3*c**2);
+    e=1.602176634e-19*C;
+    alpha=0.0072973525643;
+    m0=4*pi*alpha*hb/(e**2*c);
+    e0=e**2/(4*pi*alpha*hb*c);
+    me=9.1093837139e-31*kg;
+    mp=1.67262192595e-27*kg;
+    mn=1.67492750056e-27*kg;
+    a0=hb/(alpha*me*c);
+    Ryd=alpha**2*me*c/(2*h);
+    Na=6.02214076e23/mol;
+    u=1.66053906892e-27*kg;
+    R=Na*kb;
+    `;
     function fac(num)
     {
         var rval=1;
@@ -104,8 +164,10 @@
         }
         return ret;
     }
+    let lastbutton=undefined;
     let lastinput="";
     let sol="";
+    let cleanedformula="";
     let screen = document.querySelector('.screen');
     let buttons = document.querySelectorAll('.btn');
     let inv= document.querySelector('.btn-2nd');
@@ -225,10 +287,53 @@
                     case "_M-":
                     case "_MC":
                     case "_MR":
+                    case "_units":
+                        if(lastbutton!="_EQ") equalButton();
+                        let ans= eval(
+                            setSIUnits(1,1)+
+                            unitsandconsts+
+                            cleanedformula);
+                      
+                        let ans2=SI.map((val,i)=>{
+                            return eval(
+                                setSIUnits(i,2)+
+                                unitsandconsts+
+                                cleanedformula);
+                        } );
+                        console.log(ans2)
+                        let exp=ans2.map((val,i)=>{
+                            return Math.log(val/ans);
+                        })
+                        let error=false;
+                        for(i in exp){
+                            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-5){
+                                error=true;
+                                break;
+                            }
+                        }
+                        if(!error){
+                            let res=exp.reduce((accu, val, i)=>{
+                                if(Math.abs(val)<1e-5) return accu;
+                                return accu+SI[i]+"^"+Math.round(val)+" ";
+                            },"")
+                            
+                            
+                            screen.value = sol+" "+res;
+                            
+
+                            screen.focus();
+                            //screen.select();
+                        }else{
+                            screen.value = "Unit error"
+                            screen.focus();
+                            screen.select();
+                        }
+                        break;
                     default:
                         alert("unimplemented "+value)
                 }
                 screen.focus();
+                lastbutton=value;
                 return;
             }
             console.log('Button clicked:', value); // Debug log
@@ -255,6 +360,7 @@
                     screen.focus();
                 }
                 console.log('Screen value:', screen.value); // Debug log
+                lastbutton=value;
             }
         });
     });//end of buttons.forEach(function(button)
@@ -324,58 +430,13 @@
                 screen.value=screen.value.replace(/\%/g, 'e-2')
                 screen.value=screen.value.replace(/\^/g, '**')
                 screen.value=treatfac(screen.value)
-                console.log("cleaned formula:"+screen.value);
-                let answer = eval(`
-                    s=1;
-                    m=1;
-                    kg=1;
-                    A=1;
-                    mol=1;
-                    K=1;
-                    cd=1;
-
-                    N=kg*m/s**2;
-                    Hz=1/s;
-                    Pa=N/m**2;
-                    J=N*m;
-                    W=J/s;
-
-                    C=A*s;
-                    V=W/A;
-                    F=C/V;
-                    Ohm=V/A;
-                    S=A/V;
-
-                    Wb=V*s;
-                    T=Wb/m**2;
-                    H=Wb/A;
-                    lm=cd;
-                    lx=lm/m**2;
-                    Bq=1/s;
-                    Gy=J/kg;
-                    Sv=J/kg;
-                    kat=mol/s;
-
-                    pi=Math.PI;
-                    E=Math.E;
-                    c=299792458*m/s;
-                    h=6.62607015e-34*J*s;
-                    hb=h/2/pi;
-                    kb=1.380649e-23*J/K;
-                    G=6.67430e-11*m**3/kg/s**2;
-                    sigma=pi**2*kb**4/(60*hb**3*c**2);
-                    e=1.602176634e-19*C;
-                    alpha=0.0072973525643;
-                    m0=4*pi*alpha*hb/(e**2*c);
-                    e0=e**2/(4*pi*alpha*hb*c);
-                    me=9.1093837139e-31*kg;
-                    mp=1.67262192595e-27*kg;
-                    mn=1.67492750056e-27*kg;
-                    a0=hb/(alpha*me*c);
-                    Ryd=alpha**2*me*c/(2*h);
-                    Na=6.02214076e23/mol;
-                    u=1.66053906892e-27*kg;
-                `+screen.value);
+                cleanedformula=screen.value;
+                console.log("cleaned formula:"+cleanedformula);
+                let answer = eval(
+                    setSIUnitsTo1()
+                    +unitsandconsts
+                    +cleanedformula)
+                ;
                 screen.value = answer;
                 sol=screen.value;
                 console.log('Calculation result:', answer); // Debug log
