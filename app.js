@@ -67,7 +67,6 @@
         map((v)=>{return {key:calcUnit(v)[1],value:v}});
     
     const unitsmap = new Map(unitsarr.map((obj) => [obj.key, obj.value]));
-    console.log(unitsmap)
     function fac(num)
     {
         var rval=1;
@@ -181,6 +180,7 @@
     let hyp= document.querySelector('.btn-hyp');
     let drg=document.querySelector('.DRG')
     let form=document.querySelector('[name="inputform"]');
+    let convertbuttontoggle=false;
     
     form.addEventListener('submit',handle);
 
@@ -206,16 +206,10 @@
                 units+consts+
                 cleanedformula);
         } );
-        console.log(ans2)
-        
         let exp=ans10.map((val,i)=>{
             return Math.log(val/ans)/10;
-        })
-        console.log(exp)
-      
-
+        })  
         let error=false;
-    
         for(i in exp){
             if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
                 error=true;
@@ -234,8 +228,6 @@
     }
 
     // Log initial elements
-    console.log('Screen element:', screen);
-    console.log('Buttons:', buttons);
     inv.className = "btn-2nd";
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
@@ -355,12 +347,16 @@
 
                     case "_units":
                         if(lastbutton!="_EQ") equalButton();
-                            [error,res]=calcUnit(cleanedformula);     
-                            if(!error){
-                                if(unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
-                                else screen.value = sol+" "+res;
-                                screen.focus();
-                            }else{
+                        if(sol==0) break;
+                        if(lastbutton!="_units") convertbuttontoggle=true;
+                        else convertbuttontoggle=!convertbuttontoggle;
+                        if(lastbutton!="_EQ") equalButton();
+                        [error,res]=calcUnit(cleanedformula);     
+                        if(!error){
+                            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
+                            else screen.value = sol+" "+res;
+                            screen.focus();
+                        }else{
                             screen.value = "Unit error"
                             screen.focus();
                             screen.select();
