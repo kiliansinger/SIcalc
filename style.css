@@ -16,7 +16,7 @@ body{
 .DRG{
     flex:max-content;
     height: 100%;
-    font-size:2.2vw;
+    font-size:2.4vw;
     color:lightgreen;
 }
 form input{
@@ -48,12 +48,11 @@ form input{
     overflow: hidden;
 }
 
-small:not(.btn-2nd){
-    font-size: 2.2vw;
-    color:rgb(245, 146, 62);
+small:not(.btn-2nd,.btn-2nd-active){
+    font-size: 3vw;
+    color:yellow;
     pointer-events:none;
 }
-
 
 .button{
     display: flex;
@@ -68,7 +67,7 @@ button{
     border: 1px solid #000;
     width: 10vw;
     height: 15vw;
-    font-size: 3vw;
+    font-size: 5vw;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
@@ -85,8 +84,8 @@ button{
 }
 
 .btn-2nd{
-    background:  rgb(245, 146, 62);
-    color:#fff;
+    background: yellow;
+    color:black;
 }
 .btn-arit{
     background: rgb(36, 129, 141);
