@@ -16,7 +16,7 @@ body{
 .DRG{
     flex:max-content;
     height: 100%;
-    font-size:2.4vw;
+    font-size:2.4vmin;
     color:lightgreen;
 }
 form input{
@@ -24,7 +24,7 @@ form input{
     height: 100%;
     border: none;
     border-radius: 12px;
-    font-size:4vw;
+    font-size:4vmin;
     color: #fff;
     background: #000;
     text-align: right;
@@ -41,7 +41,7 @@ form input{
 
 .calculator{
     width: 100vmax;
-    height:90%;
+    height: 90vh;
     box-shadow: 4px 4px 30px rgba(0,0,0,2);
     border-radius: 12px;
     background: #434743;
@@ -49,7 +49,7 @@ form input{
 }
 
 small:not(.btn-2nd,.btn-2nd-active){
-    font-size: 4vw;
+    font-size: 3vmin;
     color:yellow;
     pointer-events:none;
 }
@@ -66,8 +66,8 @@ button{
     margin: 2px 0;
     border: 1px solid #000;
     width: 10vw;
-    height: 15vw;
-    font-size: 6vw;
+    height: 8vh;
+    font-size: 3vmin;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
