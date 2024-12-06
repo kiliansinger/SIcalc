@@ -18,19 +18,17 @@
         }
         return s;
     }
-    let unitsandconsts=`
+    let units=`
     N=kg*m/s**2;
     Hz=1/s;
     Pa=N/m**2;
     J=N*m;
     W=J/s;
-
     C=A*s;
     V=W/A;
     F=C/V;
     Ohm=V/A;
     S=A/V;
-
     Wb=V*s;
     T=Wb/m**2;
     H=Wb/A;
@@ -40,7 +38,8 @@
     Gy=J/kg;
     Sv=J/kg;
     kat=mol/s;
-
+    `
+    let consts=`
     pi=Math.PI;
     E=Math.E;
     c=299792458*m/s;
@@ -62,6 +61,13 @@
     u=1.66053906892e-27*kg;
     R=Na*kb;
     `;
+    let unitsarr=units.match(/(.*?)=/g).
+        map(v=>v.replace(/=/g, '')).
+        map(v=>v.replace(/ /g, '')).
+        map((v)=>{return {key:calcUnit(v)[1],value:v}});
+    
+    const unitsmap = new Map(unitsarr.map((obj) => [obj.key, obj.value]));
+    console.log(unitsmap)
     function fac(num)
     {
         var rval=1;
@@ -181,6 +187,51 @@
     function handle(event) { 
         equalButton();
     } 
+
+    function calcUnit(cleanedformula){
+        let ans= eval(
+            setSIUnits(1,1)+
+            units+consts+
+            cleanedformula);
+      
+        let ans2=SI.map((val,i)=>{
+            return eval(
+                setSIUnits(i,2)+
+                units+consts+
+                cleanedformula);
+        } );
+        let ans10=SI.map((val,i)=>{
+            return eval(
+                setSIUnits(i,11)+
+                units+consts+
+                cleanedformula);
+        } );
+        console.log(ans2)
+        
+        let exp=ans10.map((val,i)=>{
+            return Math.log(val/ans)/10;
+        })
+        console.log(exp)
+      
+
+        let error=false;
+    
+        for(i in exp){
+            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
+                error=true;
+                break;
+            }
+        }
+        
+        if(!error){
+            let res=exp.reduce((accu, val, i)=>{
+                if(Math.abs(val)<1e-15) return accu;
+                return accu+SI[i]+((Math.round(val)>1||Math.round(val)<0)?("^"+Math.round(val)):"")+" ";
+            },"")
+            return [false,res];
+        }else return [true,0];
+      
+    }
   
 
    
@@ -306,53 +357,14 @@
 
                     case "_units":
                         if(lastbutton!="_EQ") equalButton();
-                        let ans= eval(
-                            setSIUnits(1,1)+
-                            unitsandconsts+
-                            cleanedformula);
-                      
-                        let ans2=SI.map((val,i)=>{
-                            return eval(
-                                setSIUnits(i,2)+
-                                unitsandconsts+
-                                cleanedformula);
-                        } );
-                        let ans10=SI.map((val,i)=>{
-                            return eval(
-                                setSIUnits(i,11)+
-                                unitsandconsts+
-                                cleanedformula);
-                        } );
-                        console.log(ans2)
-                        
-                        let exp=ans10.map((val,i)=>{
-                            return Math.log(val/ans)/10;
-                        })
-                        console.log(exp)
-                      
+                            [error,res]=calcUnit(cleanedformula);     
+                            if(!error){
+                                if(unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
+                                else screen.value = sol+" "+res;
+                                
 
-                        let error=false;
-                    
-                        for(i in exp){
-                            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
-                                error=true;
-                                break;
-                            }
-                        }
-                    
-                        if(!error){
-                            let res=exp.reduce((accu, val, i)=>{
-                                if(Math.abs(val)<1e-15) return accu;
-                                return accu+SI[i]+((Math.round(val)>1||Math.round(val)<0)?("^"+Math.round(val)):"")+" ";
-                            },"")
-                            
-                            
-                            screen.value = sol+" "+res;
-                            
-
-                            screen.focus();
-                            //screen.select();
-                        }else{
+                                screen.focus();
+                            }else{
                             screen.value = "Unit error"
                             screen.focus();
                             screen.select();
@@ -463,7 +475,7 @@
                 console.log("cleaned formula:"+cleanedformula);
                 let answer = eval(
                     setSIUnitsTo1()
-                    +unitsandconsts
+                    +units+consts
                     +cleanedformula)
                 ;
                 screen.value = answer;
