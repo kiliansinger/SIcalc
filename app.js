@@ -300,20 +300,32 @@
                                 unitsandconsts+
                                 cleanedformula);
                         } );
+                        let ans10=SI.map((val,i)=>{
+                            return eval(
+                                setSIUnits(i,11)+
+                                unitsandconsts+
+                                cleanedformula);
+                        } );
                         console.log(ans2)
-                        let exp=ans2.map((val,i)=>{
-                            return Math.log(val/ans);
+                        
+                        let exp=ans10.map((val,i)=>{
+                            return Math.log(val/ans)/10;
                         })
+                        console.log(exp)
+                      
+
                         let error=false;
+                    
                         for(i in exp){
-                            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-5){
+                            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
                                 error=true;
                                 break;
                             }
                         }
+                    
                         if(!error){
                             let res=exp.reduce((accu, val, i)=>{
-                                if(Math.abs(val)<1e-5) return accu;
+                                if(Math.abs(val)<1e-15) return accu;
                                 return accu+SI[i]+"^"+Math.round(val)+" ";
                             },"")
                             
