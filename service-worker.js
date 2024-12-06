@@ -16,6 +16,7 @@ const FILES_TO_CACHE = [
   "./index.html",
   "./service-worker.js",
   "./app.js",
+  "./style.css",
   "./manifest.json",
   "./images/favicon.png",
   "./images/icons/icon-32x32.png",
