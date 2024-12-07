@@ -514,7 +514,7 @@
             } catch (error) {
                 screen.value+=")";
                 if (iter <10) {
-                    let thisinput=lastinput[lastinput.length-1];
+                    let thisinput=lastinput.pop();
                     if(equalButton(iter+1)) return true;
                     lastinput.push(thisinput);
                 }
