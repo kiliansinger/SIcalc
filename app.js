@@ -235,7 +235,7 @@
         if(!error){
             let res=exp.reduce((accu, val, i)=>{
                 if(Math.abs(val)<1e-15) return accu;
-                return accu+((Math.round(val)>1)?(SI[i]+"^"+Math.round(val)):((Math.round(val)<0)?"/ "+SI[i]+"^"+Math.round(-val):SI[i]))+" ";
+                return accu+((Math.round(val)>1)?(SI[i]+"^"+Math.round(val)):((Math.round(val)<0)?"/ "+SI[i]+((Math.round(-val)>1)?("^"+Math.round(-val)):""):SI[i]))+" ";
             },"")
             return [false,res];
         }else return [true,0];
