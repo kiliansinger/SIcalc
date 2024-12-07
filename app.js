@@ -79,14 +79,14 @@
         switch(drg.innerHTML){
             case "RAD": return val;
             case "DEG": return val*Math.PI/180.;
-            case "GRAD": return val*Math.PI/200.
+            case "GRA": return val*Math.PI/200.
         }
     }
     function invConvertDRG(val){
         switch(drg.innerHTML){
             case "RAD": return val;
             case "DEG": return val*180./Math.PI;
-            case "GRAD": return val*200/Math.PI;
+            case "GRA": return val*200/Math.PI;
         }
     }
     function sin(val){     
@@ -284,13 +284,13 @@
                         
                     
                         switch(drg.innerHTML){
-                            case "RAD"://RAD to GRAD
+                            case "RAD"://RAD to GRA
                                 value2="*200/pi";
                                 break;
                             case "DEG"://DEG to RAD
                                 value2="*pi/180";
                                 break;
-                            case "GRAD"://GRAD TO DEG
+                            case "GRA"://GRA TO DEG
                                 value2="*180/200"
                                 break;    
                         }
@@ -302,12 +302,12 @@
                     case "_DRG":
                         switch(drg.innerHTML){
                             case "RAD":
-                                drg.innerHTML="GRAD";
+                                drg.innerHTML="GRA";
                                 break;
                             case "DEG":
                                 drg.innerHTML="RAD";
                                 break;
-                            case "GRAD":
+                            case "GRA":
                                 drg.innerHTML="DEG";
                                 break;    
                         }

@@ -16,7 +16,7 @@ body{
 .DRG{
     flex:max-content;
     height: 100%;
-    font-size:2.4vmin;
+    font-size:3vmin;
     color:lightgreen;
 }
 form input{
