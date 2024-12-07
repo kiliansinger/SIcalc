@@ -389,7 +389,7 @@
                         else error=true
                         if(res=="" && !error) screen.value=sol;
                         else if(!error){
-                            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
+                            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
                             else screen.value = sol+" "+res;
                             screen.focus();
                         }else{
