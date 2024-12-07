@@ -192,7 +192,10 @@
     function handle(event) { 
         equalButton();
     } 
-
+    function unitPow(val,i){
+        if(val<0) return "";
+        return ((Math.round(val)>1)?(SI[i]+"^"+Math.round(val)):SI[i])+" "
+    }
     function calcUnit(cleanedformula){
         let ans= eval(
             setSIUnits(1,1)+
@@ -234,10 +237,13 @@
         
         if(!error){
             let res=exp.reduce((accu, val, i)=>{
-                if(Math.abs(val)<1e-15) return accu;
-                return accu+((Math.round(val)>1)?(SI[i]+"^"+Math.round(val)):((Math.round(val)<0)?"/ "+SI[i]+((Math.round(-val)>1)?("^"+Math.round(-val)):""):SI[i]))+" ";
-            },"")
-            return [false,res];
+                if(val==0) return accu;
+                let up=unitPow(-val,i);
+                if(up!="") accu[2]++;
+                return [accu[0]+unitPow(val,i),accu[1]+up,accu[2]]
+            },["","",0])
+            if(res[2]>1) return [false,res[0]+"/ ( "+res[1]+") "];
+            else return [false,res[0]+"/ "+res[1]]; 
         }else return [true,0];
       
     }
