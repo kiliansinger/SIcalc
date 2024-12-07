@@ -30,7 +30,7 @@
 	</noscript>
 
 	<script>
-        let serviceworkeractivate=false;
+        let serviceworkeractivate=true;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
@@ -60,7 +60,7 @@
 
                 <button type="button" class ="btn btn-unit2" data-num2=" Wb " data-num=" N "><small>Wb</small><br/>N</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" T " data-num=" Hz "><small>T</small><br/>Hz</button>
-                <button type="button" class ="btn btn-unit2" data-num2=" H " data-num=" Pa "><small>H</small><br/>Pa</button>
+                <button type="button" class ="btn btn-unit2" data-num2=" H " data-num="_D"><small>H</small><br/>&#x25BC;</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" lm " data-num=" J " ><small>lm</small><br/>J</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" lx " data-num=" W " ><small>lx</small><br/>W</button>
 
@@ -68,7 +68,7 @@
                 <button type="button" class ="btn btn-unit2" data-num2=" Gy " data-num=" V "><small>Gy</small><br/>V</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" Sv " data-num=" F "><small>Sv</small><br/>F</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" S " data-num=" Ohm " ><small>S</small><br/>Ohm</button>
-                <button type="button" class ="btn btn-unit2" data-num=" kat ">kat</button>
+                <button type="button" class ="btn btn-unit2" data-num2=" kat " data-num=" Pa "><small>kat</small><br/>Pa</button>
 
                 <button type="button" class ="btn btn-fn" data-num2="_DRG2" data-num="_DRG"><small>DRG&#x25B6;</small><br/>DRG</button>
                 <button type="button" class ="btn btn-hyp"data-num2="_HYP" data-num="_HYP">HYP</button>
@@ -78,7 +78,7 @@
 
                 <button type="button" class ="btn btn-fn" data-num2=" E " data-num=" pi "><small>E</small><br/>&pi;</button>
                 <button type="button" class ="btn btn-fn" data-num2=" ln(" data-num=" E^"><small>ln</small><br/>E<sup>x</sup></button>
-                <button type="button" class ="btn btn-fn" data-num2=" log(" data-num=" 10^"><small>log<sub>10</sub></small><br/>10<sup>x</sup></button>
+                <button type="button" class ="btn btn-fn" data-num2=" log2(" data-num=" 2^"><small>log<sub>2</sub></small><br/>2<sup>x</sup></button>
                 <button type="button" class ="btn btn-fn" data-num2=" sqrt(" data-num="^2"><small><sup>2</sup>&radic;</small><br/>x<sup>2</sup></button>
                 <button type="button" class ="btn btn-fn" data-num2="^(1/" data-num="^"><small><sup>x</sup>&radic;y</small><br/>y<sup>x</sup></button>
                 
@@ -90,16 +90,16 @@
                 
                 <button type="button" class ="btn btn-grey" data-num2=" c " data-num="7"><small>c</small><br/>7</button>
                 <button type="button" class ="btn btn-grey" data-num2=" h " data-num="8"><small>h</small><br/>8</button>
-                <button type="button" class ="btn btn-grey" data-num2=" hb " data-num="9"><small>&hbar;(hb)</small><br/>9</button>
+                <button type="button" class ="btn btn-grey" data-num2=" hb " data-num="9"><small>&hbar;/hb</small><br/>9</button>
                 <button type="button" class ="btn btn-arit" data-num2=" kb " data-num="("><small>kb</small><br/>(</button>
                 <button type="button" class ="btn btn-arit" data-num2=" G " data-num=")"><small>G</small><br/>)</button>
 
 
-                <button type="button" class ="btn btn-grey" data-num2=" sigma " data-num="4"><small>&sigma;(sigma)</small><br/>4</button>
+                <button type="button" class ="btn btn-grey" data-num2=" sigma " data-num="4"><small>&sigma;/sigma</small><br/>4</button>
                 <button type="button" class ="btn btn-grey" data-num2=" e " data-num="5"><small>e</small><br/>5</button>
-                <button type="button" class ="btn btn-grey" data-num2=" alpha " data-num="6"><small>&alpha;(alpha)</small><br/>6</button>
+                <button type="button" class ="btn btn-grey" data-num2=" alpha " data-num="6"><small>&alpha;/alpha</small><br/>6</button>
                 <button type="button" class ="btn btn btn-arit" data-num2=" m0 " data-num="*"><small>m<sub>0</sub></small><br/>x</button>
-                <button type="button" class ="btn btn btn-arit" data-num2=" e0 " data-num="/"><small>&epsilon;<sub>0</sub>(e0)</small><br/>/</button>
+                <button type="button" class ="btn btn btn-arit" data-num2=" e0 " data-num="/"><small>&epsilon;<sub>0</sub>/e0</small><br/>/</button>
                 
                 <button type="button" class ="btn btn-grey" data-num2=" me " data-num="1"><small>m<sub>e</sub></small><br/>1</button>
                 <button type="button" class ="btn btn-grey" data-num2=" mp " data-num="2"><small>m<sub>p</sub></small><br/>2</button>
@@ -109,7 +109,7 @@
 
                 <button type="button" class ="btn btn-grey" data-num2=" NA " data-num="0"><small>N<sub>A</sub></small><br/>0</button>
                 <button type="button" class ="btn btn-grey" data-num2=" u " data-num="."><small>u</small><br/>.</button>
-                <button type="button" class ="btn btn-fn" data-num="*10^">x10<sup>x</sup></button>
+                <button type="button" class ="btn btn-fn" data-num2=" log(" data-num=" 10^"><small>log<sub>10</sub></small><br/>10<sup>x</sup></button>
                 <button type="button" class ="btn btn-arit" data-num2="R" data-num="%"><small>R</small><br/>%</button>
                 <button type="button" class ="btn btn-equal" data-num2="_SOL" data-num="_EQ"><small>SOL</small><br/>=</button>
                 

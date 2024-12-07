@@ -131,6 +131,9 @@
     function log10(val){
         return Math.log10(val);
     }
+    function log2(val){
+        return Math.log2(val);
+    }
     function sqrt(val){
         return Math.sqrt(val);
     }
@@ -172,7 +175,8 @@
     }
     let mem=0;
     let lastbutton=undefined;
-    let lastinput="";
+    let lastinput=[""];
+    let historycnt=0;
     let sol="";
     let cleanedformula="";
     let screen = document.querySelector('.screen');
@@ -322,7 +326,17 @@
                         screen.focus();
                         break;
                     case "_U":
-                        screen.value=lastinput;
+                        if(lastbutton!="_U" && lastbutton!="_D") historycnt=lastinput.length;
+                        --historycnt;
+                        if(historycnt<0)historycnt=0;
+                        screen.value=lastinput[historycnt];
+                        screen.focus();
+                        break;
+                    case "_D":
+                        if(lastbutton!="_U" && lastbutton!="_D") historycnt=lastinput.length;
+                        ++historycnt;
+                        if(historycnt>=lastinput.length) historycnt=lastinput.length-1;
+                        screen.value=lastinput[historycnt];
                         screen.focus();
                         break;
                     case "_L":
@@ -363,9 +377,10 @@
                         else convertbuttontoggle=!convertbuttontoggle;
                        // if(lastbutton!="_EQ") 
                         equalButton();
-                        if(! lastinput.endsWith("?")) [error,res]=calcUnit(cleanedformula);     
+                        if(! lastinput[lastinput.length-1].endsWith("?")) [error,res]=calcUnit(cleanedformula);     
                         else error=true
-                        if(!error){
+                        if(res=="") screen.value=sol;
+                        else if(!error){
                             if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
                             else screen.value = sol+" "+res;
                             screen.focus();
@@ -470,7 +485,7 @@
                 screen.value=screen.value.replace(/\s*\^\s*/g, '^')
                 //replace spaces with *
                 screen.value=screen.value.replace(/\s+/g, '*');
-                lastinput=screen.value;
+                lastinput.push(screen.value);
 
                 //replace % by e-2
                 screen.value=screen.value.replace(/\%/g, 'e-2')
@@ -491,9 +506,9 @@
             } catch (error) {
                 screen.value+=")";
                 if (iter <10) {
-                    let thisinput=lastinput;
+                    let thisinput=lastinput[lastinput.length-1];
                     if(equalButton(iter+1)) return true;
-                    lastinput=thisinput;
+                    lastinput.push(thisinput);
                 }
                 screen.value = "Error"+error;
                 screen.focus();
