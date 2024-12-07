@@ -237,7 +237,8 @@
         
         if(!error){
             let res=exp.reduce((accu, val, i)=>{
-                if(val==0) return accu;
+                console.log(i+":"+val)
+                if(Math.abs(val)<=1e-15) return accu;
                 let up=unitPow(-val,i);
                 if(up!="") accu[2]++;
                 return [accu[0]+unitPow(val,i),accu[1]+up,accu[2]]
