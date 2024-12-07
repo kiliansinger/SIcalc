@@ -379,7 +379,7 @@
                         equalButton();
                         if(! lastinput[lastinput.length-1].endsWith("?")) [error,res]=calcUnit(cleanedformula);     
                         else error=true
-                        if(res=="") screen.value=sol;
+                        if(res=="" && !error) screen.value=sol;
                         else if(!error){
                             if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
                             else screen.value = sol+" "+res;
