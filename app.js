@@ -128,7 +128,7 @@
     function ln(val){
         return Math.log(val);
     }
-    function log10(val){
+    function log(val){
         return Math.log10(val);
     }
     function log2(val){
