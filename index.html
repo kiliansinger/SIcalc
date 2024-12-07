@@ -30,7 +30,7 @@
 	</noscript>
 
 	<script>
-        let serviceworkeractivate=true;
+        let serviceworkeractivate=false;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
@@ -68,7 +68,7 @@
                 <button type="button" class ="btn btn-unit2" data-num2=" Gy " data-num=" V "><small>Gy</small><br/>V</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" Sv " data-num=" F "><small>Sv</small><br/>F</button>
                 <button type="button" class ="btn btn-unit2" data-num2=" S " data-num=" Ohm " ><small>S</small><br/>Ohm</button>
-                <button type="button" class ="btn btn-unit2" data-num2=" kat " data-num="_units"><small>kat</small><br/>UNITS</button>
+                <button type="button" class ="btn btn-unit2" data-num=" kat ">kat</button>
 
                 <button type="button" class ="btn btn-fn" data-num2="_DRG2" data-num="_DRG"><small>DRG&#x25B6;</small><br/>DRG</button>
                 <button type="button" class ="btn btn-hyp"data-num2="_HYP" data-num="_HYP">HYP</button>

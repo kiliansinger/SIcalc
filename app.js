@@ -218,6 +218,10 @@
         let error=false;
     
         for(i in exp){
+            if(isNaN(exp[i])){
+                error=true;
+                break;
+            }
             if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
                 error=true;
                 break;
@@ -307,9 +311,9 @@
                     case "_BACK":
                         backButton();
                         break;
-                    case "_EQ":
-                        equalButton();
-                        break;
+                    //case "_EQ":
+                    //    equalButton();
+                    //    break;
                     case "_SOL":
                         const [start, end] = [screen.selectionStart, screen.selectionEnd];
                         screen.setRangeText(sol, start, end);
@@ -354,18 +358,19 @@
                         }
                         break;
 
-                    case "_units":
-                        if(lastbutton!="_units") convertbuttontoggle=true;
+                    case "_EQ":
+                        if(lastbutton!="_EQ") convertbuttontoggle=true;
                         else convertbuttontoggle=!convertbuttontoggle;
-                        if(lastbutton!="_EQ") equalButton();
-                        
-                        [error,res]=calcUnit(cleanedformula);     
+                       // if(lastbutton!="_EQ") 
+                        equalButton();
+                        if(! lastinput.endsWith("?")) [error,res]=calcUnit(cleanedformula);     
+                        else error=true
                         if(!error){
                             if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res);
                             else screen.value = sol+" "+res;
                             screen.focus();
                         }else{
-                            screen.value = "Unit error"
+                            screen.value = sol+" "+"?"
                             screen.focus();
                             screen.select();
                         }
@@ -472,6 +477,7 @@
                 screen.value=screen.value.replace(/\^/g, '**')
                 screen.value=treatfac(screen.value)
                 cleanedformula=screen.value;
+                cleanedformula=cleanedformula.replace(/\**\?/g, '');//erase *?
                 console.log("cleaned formula:"+cleanedformula);
                 let answer = eval(
                     setSIUnitsTo1()
