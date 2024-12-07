@@ -243,7 +243,8 @@
                 if(up!="") accu[2]++;
                 return [accu[0]+unitPow(val,i),accu[1]+up,accu[2]]
             },["","",0])
-            if(res[2]>1) return [false,res[0]+"/ ( "+res[1]+") "];
+            if(res[1]=="") return [false,res[0]];
+            else if(res[2]>1) return [false,res[0]+"/ ( "+res[1]+") "];
             else return [false,res[0]+"/ "+res[1]]; 
         }else return [true,0];
       
