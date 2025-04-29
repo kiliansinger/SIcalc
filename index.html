@@ -30,7 +30,7 @@
 	</noscript>
 
 	<script>
-        let serviceworkeractivate=true;
+        let serviceworkeractivate=false;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
@@ -83,10 +83,10 @@
                 <button type="button" class ="btn btn-fn" data-num2="^(1/" data-num="^"><small><sup>x</sup>&radic;y</small><br/>y<sup>x</sup></button>
                 
                 <button type="button" class ="btn btn-2nd" data-num2="_2nd"  data-num="_2nd"><small class ="btn-2nd">2nd</small><br/>&nbsp;</button>
-                <button type="button" class ="btn btn-fn" data-num2="_M+" data-num=" 1/"><small>M+</small><br/>1/x</button>
-                <button type="button" class ="btn btn-fn" data-num2="_M-" data-num="!"><small>M-</small><br/>x!</button>
-                <button type="button" class ="btn btn-red" data-num2="_MR" data-num="_BACK"><small>MR</small><br/>&#x232B;</button>
-                <button type="button" class ="btn btn-red" data-num2="_MC" data-num="_CLR"><small>MC</small><br/>CLR</button>             
+                <button type="button" class ="btn btn-fn" data-num2="_M+" data-num=" 1/"><small2>M+</small2><br/>1/x</button>
+                <button type="button" class ="btn btn-fn" data-num2="_M-" data-num="!"><small2>M-</small2><br/>x!</button>
+                <button type="button" class ="btn btn-red" data-num2="_MR" data-num="_BACK"><small2>MR</small2><br/>&#x232B;</button>
+                <button type="button" class ="btn btn-red" data-num2="_MC" data-num="_CLR"><small2>MC</small2><br/>CLR</button>             
                 
                 <button type="button" class ="btn btn-grey" data-num2=" alpha " data-num="7"><small>&alpha;/alpha</small><br/>7</button>
                 <button type="button" class ="btn btn-grey" data-num2=" a0 " data-num="8"><small>a<sub>0</sub></small><br/>8</button>
