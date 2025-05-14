@@ -18,6 +18,39 @@
         }
         return s;
     }
+    function prefixUnits(val){
+        let s="";
+        if(val=="kg") {
+            s+="g=1e-3*"+val+";"
+            val="g";
+        }
+        s+="q"+val+"=1e-30*"+val+";\n";
+        s+="r"+val+"=1e-27*"+val+";\n";
+        s+="y"+val+"=1e-24*"+val+";\n";
+        s+="z"+val+"=1e-21*"+val+";\n";
+        s+="a"+val+"=1e-18*"+val+";\n";
+        s+="f"+val+"=1e-15*"+val+";\n";
+        s+="p"+val+"=1e-12*"+val+";\n";
+        s+="n"+val+"=1e-9*"+val+";\n";
+        s+="u"+val+"=1e-6*"+val+";\n";
+        s+="m"+val+"=1e-3*"+val+";\n";
+        s+="c"+val+"=1e-2*"+val+";\n";
+        s+="d"+val+"=1e-1*"+val+";\n";
+        s+="da"+val+"=1e1*"+val+";\n";
+        s+="h"+val+"=1e2*"+val+";\n";
+        if(val!="g") s+="k"+val+"=1e3*"+val+";\n";
+        s+="M"+val+"=1e6*"+val+";\n";
+        s+="G"+val+"=1e9*"+val+";\n";
+        s+="T"+val+"=1e12*"+val+";\n";
+        s+="P"+val+"=1e15*"+val+";\n";
+        s+="E"+val+"=1e18*"+val+";\n";
+        s+="Z"+val+"=1e21*"+val+";\n";
+        s+="Y"+val+"=1e24*"+val+";\n";
+        s+="R"+val+"=1e27*"+val+";\n";
+        s+="Q"+val+"=1e30*"+val+";\n";
+        
+        return s;
+    }
     let units=`
     N=kg*m/s**2;
     Hz=1/s;
@@ -61,13 +94,21 @@
     u=1.66053906892e-27*kg;
     R=NA*kb;
     `;
+    for(i in SI){
+        consts+=prefixUnits(SI[i])
+    }
+
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
         map(v=>v.replace(/ /g, '')).
         map((v)=>{return {key:calcUnit(v)[1],value:v}});
-    
+    console.log(unitsarr)
     const unitsmap = new Map(unitsarr.map((obj) => [obj.key, obj.value]));
-    console.log(unitsmap)
+    for(i in unitsarr){
+        consts+=prefixUnits(unitsarr[i].value);
+    }
+    console.log(consts);
+    
     function fac(num)
     {
         var rval=1;
@@ -190,7 +231,20 @@
     form.addEventListener('submit',handle);
 
     function handle(event) { 
+        convertbuttontoggle=true;
         equalButton();
+         if(! lastinput[lastinput.length-1].endsWith("?")) [error,res]=calcUnit(cleanedformula);     
+        else error=true
+        if(res=="" && !error) screen.value=sol;
+        else if(!error){
+            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
+            else screen.value = sol+" "+res;
+            screen.focus();
+        }else{
+            screen.value = sol+" "+"?"
+            screen.focus();
+            screen.select();
+        }
     } 
     function unitPow(val,i){
         if(val<0) return "";
