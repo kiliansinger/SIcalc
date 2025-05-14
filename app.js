@@ -53,7 +53,6 @@
     }
     let units=`
     N=kg*m/s**2;
-    Hz=1/s;
     Pa=N/m**2;
     J=N*m;
     W=J/s;
@@ -68,6 +67,7 @@
     lm=cd;
     lx=lm/m**2;
     Bq=1/s;
+    Hz=1/s;
     Gy=J/kg;
     Sv=J/kg;
     kat=mol/s;
