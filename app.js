@@ -93,11 +93,12 @@
     NA=6.02214076e23/mol;
     u=1.66053906892e-27*kg;
     R=NA*kb;
+    eV=e*V;
     `;
     for(i in SI){
         consts+=prefixUnits(SI[i])
     }
-
+    consts+=prefixUnits("eV");
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
         map(v=>v.replace(/ /g, '')).
