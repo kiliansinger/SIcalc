@@ -569,6 +569,8 @@
                     +units+consts
                     +cleanedformula)
                 ;
+                if(Math.abs(answer)<1e-3) answer=answer.toExponential();
+                else if(Math.abs(answer)>1e3) answer=answer.toExponential()
                 screen.value = answer;
                 sol=screen.value;
                 console.log('Calculation result:', answer); // Debug log

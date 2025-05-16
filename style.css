@@ -129,11 +129,11 @@ green{
     color: #fff
 }
 .btn-hyp{
-    background: black;
-    color: #fff
+    background: #0a0;
+    color: white;
 }
 .btn-hyp-active{
-    background: #fff;
+    background: #afa;
     color:black;
 }
 .btn-red{
