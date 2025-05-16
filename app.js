@@ -228,7 +228,8 @@
     let drg=document.querySelector('.DRG')
     let form=document.querySelector('[name="inputform"]');
     let convertbuttontoggle=false;
-    
+    let prebuttonclicked=false;
+    let previousprebuttonclicked=false;
     form.addEventListener('submit',handle);
 
     function handle(event) { 
@@ -312,11 +313,15 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
-           
+            previousprebuttonclicked=prebuttonclicked;
+            prebuttonclicked=false
             let value=undefined;
          
             if(hyp.className == "btn-hyp-active"){
-                if(inv.className == "btn-2nd") value = e.target.dataset.numh;
+                if(inv.className == "btn-2nd") {
+                    prebuttonclicked=true;
+                    value = e.target.dataset.numh;
+                }
                 else value = e.target.dataset.numh2;
             }
             if(value==undefined){
@@ -368,6 +373,7 @@
                         }
                         break;
                     case "_2nd":
+                        prebuttonclicked=previousprebuttonclicked;
                         break;
                     case "_HYP":
                         //alert("hyperbolicus not yet implemented")
@@ -468,6 +474,7 @@
                     screen.value.endsWith("/")||
                     screen.value.endsWith("+")||
                     screen.value.endsWith("-")||
+                    previousprebuttonclicked ||
                     screen.value=="") && value.startsWith(" ")) {
                         const [start, end] = [screen.selectionStart, screen.selectionEnd];
                         screen.setRangeText(value.substring(1), start, end);
