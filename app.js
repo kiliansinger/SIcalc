@@ -319,7 +319,7 @@
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
             previousprebuttonclicked=prebuttonclicked;
-            prebuttonclicked=false
+            prebuttonclicked=false;
             let value=undefined;
          
             if(hyp.className == "btn-hyp-active"){
@@ -379,6 +379,7 @@
                         break;
                     case "_2nd":
                         prebuttonclicked=previousprebuttonclicked;
+                        previousprebuttonclicked=false;
                         break;
                     case "_HYP":
                         //alert("hyperbolicus not yet implemented")
