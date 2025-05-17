@@ -227,19 +227,24 @@
     let hyp= document.querySelector('.btn-hyp');
     let drg=document.querySelector('.DRG')
     let form=document.querySelector('[name="inputform"]');
-    let convertbuttontoggle=false;
+    let convertbuttontoggle=0;
     let prebuttonclicked=false;
     let previousprebuttonclicked=false;
     form.addEventListener('submit',handle);
 
     function handle(event) { 
-        convertbuttontoggle=true;
+        convertbuttontoggle++;
+        if(convertbuttontoggle==4) convertbuttontoggle=0;
         equalButton();
          if(! lastinput[lastinput.length-1].endsWith("?")) [error,res]=calcUnit(cleanedformula);     
         else error=true
-        if(res=="" && !error) screen.value=sol;
+        if(res=="" && !error) {
+            convertbuttontoggle++;
+            if(convertbuttontoggle==4) convertbuttontoggle=0;
+            screen.value=sol;
+        }
         else if(!error){
-            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
+            if((convertbuttontoggle&1)==1 && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
             else screen.value = sol+" "+res;
             screen.focus();
         }else{
@@ -442,15 +447,22 @@
                         break;
 
                     case "_EQ":
-                        if(lastbutton!="_EQ") convertbuttontoggle=true;
-                        else convertbuttontoggle=!convertbuttontoggle;
+                        if(lastbutton!="_EQ") convertbuttontoggle=1;
+                        else {
+                            convertbuttontoggle++;
+                            if(convertbuttontoggle==4) convertbuttontoggle=0;
+                        }
                        // if(lastbutton!="_EQ") 
                         equalButton();
                         if(! lastinput[lastinput.length-1].endsWith("?")) [error,res]=calcUnit(cleanedformula);     
                         else error=true
-                        if(res=="" && !error) screen.value=sol;
+                        if(res=="" && !error) {
+                            screen.value=sol;
+                            convertbuttontoggle++;
+                            if(convertbuttontoggle==4) convertbuttontoggle=0;
+                        }
                         else if(!error){
-                            if(convertbuttontoggle && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
+                            if((convertbuttontoggle&1)==1 && unitsmap.has(res)) screen.value = sol+" "+unitsmap.get(res)+" ";
                             else screen.value = sol+" "+res;
                             screen.focus();
                         }else{
@@ -569,8 +581,8 @@
                     +units+consts
                     +cleanedformula)
                 ;
-                if(Math.abs(answer)<1e-3) answer=answer.toExponential();
-                else if(Math.abs(answer)>1e3) answer=answer.toExponential()
+                if(Math.abs(answer)<1e-3 && convertbuttontoggle<2) answer=answer.toExponential();
+                else if(Math.abs(answer)>1e3 && convertbuttontoggle<2) answer=answer.toExponential()
                 screen.value = answer;
                 sol=screen.value;
                 console.log('Calculation result:', answer); // Debug log
