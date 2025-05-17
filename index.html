@@ -30,7 +30,7 @@
 	</noscript>
 
 	<script>
-        let serviceworkeractivate=false;
+        let serviceworkeractivate=true;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
