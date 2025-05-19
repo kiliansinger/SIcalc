@@ -228,8 +228,8 @@
     let drg=document.querySelector('.DRG')
     let form=document.querySelector('[name="inputform"]');
     let convertbuttontoggle=0;
-    let prebuttonclicked=false;
-    let previousprebuttonclicked=false;
+    let killleadingspace=false;
+    let killnextleadingspace=false;
     form.addEventListener('submit',handle);
 
     function handle(event) { 
@@ -318,12 +318,15 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
-             let value=undefined;
-         
+            let value=undefined;
+            let thistime=true;
             if(hyp.className == "btn-hyp-active"){
-                if(inv.className == "btn-2nd") {
-                    prebuttonclicked=true;
+                if(inv.className == "btn-2nd") {//2nd not pressed while hyp is active
                     value = e.target.dataset.numh;
+                    if(value!="sinh" && value !="cosh" && value!="tanh" && value !="asinh" && value != "acosh" && value != "atanh"){
+                        killnextleadingspace=true;
+                        thistime=false;
+                    }
                 }
                 else value = e.target.dataset.numh2;
             }
@@ -331,17 +334,16 @@
                 if(inv.className == "btn-2nd") value = e.target.dataset.num;
                 else value = e.target.dataset.num2;
             }
- 
+
             if(value!="_HYP" && value!="_2nd") {
                 inv.className = "btn-2nd";
                 hyp.className = "btn-hyp";
             }
             if(!value)return;
-            if(value!="_2nd"){
-                previousprebuttonclicked=prebuttonclicked;
-                prebuttonclicked=false;
+            if(value!="_2nd" && thistime){
+                killleadingspace=killnextleadingspace;
+                killnextleadingspace=false;
             }
- 
             if(value.startsWith("_")){//put here only buttons that have one of num or num2
                 switch (value) {
                     case "_DRG2":
@@ -383,7 +385,6 @@
                     case "_2nd":
                         break;
                     case "_HYP":
-                        //alert("hyperbolicus not yet implemented")
                         break;
                     case "_CLR":
                         clearButton();
@@ -488,8 +489,10 @@
                     screen.value.endsWith("/")||
                     screen.value.endsWith("+")||
                     screen.value.endsWith("-")||
-                    previousprebuttonclicked ||
+                    killleadingspace ||
                     screen.value=="") && value.startsWith(" ")) {
+                        console.log("kill")
+                        if(killleadingspace) killleadingspace=false;
                         const [start, end] = [screen.selectionStart, screen.selectionEnd];
                         screen.setRangeText(value.substring(1), start, end);
                         screen.selectionEnd+=value.substring(1).length;
