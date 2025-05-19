@@ -551,7 +551,7 @@
     });//end of buttons.forEach(function(button)
     //needs to come after the above buttons.forEach(function(button)...
     screen.addEventListener('click', function(e){
-        screen.attributes["inputmode"].value="text";
+        screen.attributes["inputmode"].value="search";
         screen.focus();
     })
     screen.addEventListener("focusout", (e) => { 
