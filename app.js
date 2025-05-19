@@ -318,6 +318,10 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
+            if(value!="_2nd"){
+                previousprebuttonclicked=prebuttonclicked;
+                prebuttonclicked=false;
+            }
             previousprebuttonclicked=prebuttonclicked;
             prebuttonclicked=false;
             let value=undefined;
@@ -378,8 +382,6 @@
                         }
                         break;
                     case "_2nd":
-                        prebuttonclicked=previousprebuttonclicked;
-                        previousprebuttonclicked=false;
                         break;
                     case "_HYP":
                         //alert("hyperbolicus not yet implemented")
