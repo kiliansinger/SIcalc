@@ -104,8 +104,11 @@
     yd=914.4*m;
     mi=1609.344*m;
     L=0.001*m**3;
+    l=L;
     USgal=3.79*L;
+    usgal=USgal;
     Impgal=4.55*L;
+    impgal=Impgal;
     brl=159*L;
     t=1000*kg;
     shton=907.2*kg;
@@ -115,6 +118,7 @@
     bar=100000*Pa;
     psi=0.06895*bar;
     mHg=bar/0.7500188;
+    mhg=mHg;
     atm=1.013*bar;
     kgfm=9.80665*N*m;
     ftlb=1.35582*N*m;
