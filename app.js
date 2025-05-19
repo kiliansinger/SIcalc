@@ -24,11 +24,11 @@
             s+="g=1e-3*"+val+";"
             val="g";
         }
-        s+="q"+val+"=1e-30*"+val+";\n";
-        s+="r"+val+"=1e-27*"+val+";\n";
-        s+="y"+val+"=1e-24*"+val+";\n";
-        s+="z"+val+"=1e-21*"+val+";\n";
-        s+="a"+val+"=1e-18*"+val+";\n";
+        s+="q"+val+"=1e-30*"+val+";\n";//not on keyboard
+        s+="r"+val+"=1e-27*"+val+";\n";//not on keyboard
+        s+="y"+val+"=1e-24*"+val+";\n";//not on keyboard
+        s+="z"+val+"=1e-21*"+val+";\n";//not on keyboard
+        s+="a"+val+"=1e-18*"+val+";\n";//not on keyboard
         s+="f"+val+"=1e-15*"+val+";\n";
         s+="p"+val+"=1e-12*"+val+";\n";
         s+="n"+val+"=1e-9*"+val+";\n";
@@ -43,11 +43,11 @@
         s+="G"+val+"=1e9*"+val+";\n";
         s+="T"+val+"=1e12*"+val+";\n";
         s+="P"+val+"=1e15*"+val+";\n";
-        s+="E"+val+"=1e18*"+val+";\n";
-        s+="Z"+val+"=1e21*"+val+";\n";
-        s+="Y"+val+"=1e24*"+val+";\n";
-        s+="R"+val+"=1e27*"+val+";\n";
-        s+="Q"+val+"=1e30*"+val+";\n";
+        s+="E"+val+"=1e18*"+val+";\n";//not on keyboard
+        s+="Z"+val+"=1e21*"+val+";\n";//not on keyboard
+        s+="Y"+val+"=1e24*"+val+";\n";//not on keyboard
+        s+="R"+val+"=1e27*"+val+";\n";//not on keyboard
+        s+="Q"+val+"=1e30*"+val+";\n";//not on keyboard
         
         return s;
     }
@@ -93,12 +93,49 @@
     NA=6.02214076e23/mol;
     u=1.66053906892e-27*kg;
     R=NA*kb;
-    eV=e*V;
+    //following are unit abbreviations
+    eV=e*V;//not yet in keyboard
+    hr=3600*s;
+    min=60*s;
+    d=24*hr;
+    y=365*d;
+    inch=0.0254*m;
+    ft=0.03048*m;
+    yd=914.4*m;
+    mi=1609.344*m;
+    L=0.001*m**3;
+    USgal=3.79*L;
+    Impgal=4.55*L;
+    brl=159*L;
+    t=1000*kg;
+    shton=907.2*kg;
+    Lton=1016*kg;
+    lb=0.4536*kg;
+    oz=0.02835*kg;
+    bar=100000*Pa;
+    psi=0.06895*bar;
+    mHg=bar/0.7500188;
+    atm=1.013*bar;
+    kgfm=9.80665*N*m;
+    ftlb=1.35582*N*m;
+    inlb=0.112985*N*m;
     `;
     for(i in SI){
         consts+=prefixUnits(SI[i])
     }
     consts+=prefixUnits("eV");
+    consts+=prefixUnits("L");
+    consts+=prefixUnits("USgal");
+    consts+=prefixUnits("Impgal");
+    consts+=prefixUnits("brl");
+    consts+=prefixUnits("t");
+    consts+=prefixUnits("shton");
+    consts+=prefixUnits("Lton");
+    consts+=prefixUnits("bar");
+    consts+=prefixUnits("psi");
+    consts+=prefixUnits("mHg");
+    consts+=prefixUnits("atm");
+
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
         map(v=>v.replace(/ /g, '')).
@@ -513,6 +550,13 @@
         });
     });//end of buttons.forEach(function(button)
     //needs to come after the above buttons.forEach(function(button)...
+    screen.addEventListener('click', function(e){
+        screen.attributes["inputmode"].value="text";
+        screen.focus();
+    })
+    screen.addEventListener("focusout", (e) => { 
+        screen.attributes["inputmode"].value="none";
+    })
     inv.addEventListener('click', function(e) {
         console.log('inv button clicked'+inv.className); // Debug log
         if(inv.className == "btn-2nd")  inv.className="btn-2nd-active";
