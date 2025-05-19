@@ -318,13 +318,7 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
-            if(value!="_2nd"){
-                previousprebuttonclicked=prebuttonclicked;
-                prebuttonclicked=false;
-            }
-            previousprebuttonclicked=prebuttonclicked;
-            prebuttonclicked=false;
-            let value=undefined;
+             let value=undefined;
          
             if(hyp.className == "btn-hyp-active"){
                 if(inv.className == "btn-2nd") {
@@ -337,12 +331,17 @@
                 if(inv.className == "btn-2nd") value = e.target.dataset.num;
                 else value = e.target.dataset.num2;
             }
-
+ 
             if(value!="_HYP" && value!="_2nd") {
                 inv.className = "btn-2nd";
                 hyp.className = "btn-hyp";
             }
             if(!value)return;
+            if(value!="_2nd"){
+                previousprebuttonclicked=prebuttonclicked;
+                prebuttonclicked=false;
+            }
+ 
             if(value.startsWith("_")){//put here only buttons that have one of num or num2
                 switch (value) {
                     case "_DRG2":
