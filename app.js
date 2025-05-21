@@ -42,7 +42,7 @@
         s+="M"+val+"=1e6*"+val+";\n";
         s+="G"+val+"=1e9*"+val+";\n";
         s+="T"+val+"=1e12*"+val+";\n";
-        s+="P"+val+"=1e15*"+val+";\n";
+        if(val!="S") s+="P"+val+"=1e15*"+val+";\n"; //we do not prefix S with P to avoid clush with PS
         s+="E"+val+"=1e18*"+val+";\n";//not on keyboard
         s+="Z"+val+"=1e21*"+val+";\n";//not on keyboard
         s+="Y"+val+"=1e24*"+val+";\n";//not on keyboard
@@ -124,7 +124,7 @@
     ftlb=1.35582*N*m;
     inlb=0.112985*N*m;
     cal=4.187*J;
-    PS=735.49875*W;
+    PS=735.49875*W;//We overwrite Peta Siemens
     `;
     for(i in SI){
         consts+=prefixUnits(SI[i])
