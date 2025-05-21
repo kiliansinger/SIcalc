@@ -279,7 +279,6 @@
     function plot(){
         if(!plotmode) return;
         document.getElementById("plot").innerHTML = ""; 
-        setSIUnitsTo1();
         let contentsBounds = document.getElementById("plot").getBoundingClientRect();
         console.log(contentsBounds)
         let width = 800;
@@ -335,56 +334,67 @@
         return ((Math.round(val)>1)?(SI[i]+"^"+Math.round(val)):SI[i])+" "
     }
     function calcUnit(cleanedformula){
-        let ans= eval(
-            setSIUnits(1,1)+
-            units+consts+
-            cleanedformula);
-      
-        let ans2=SI.map((val,i)=>{
-            return eval(
-                setSIUnits(i,2)+
+        try{
+            let ans= eval(
+                setSIUnits(1,1)+
                 units+consts+
                 cleanedformula);
-        } );
-        let ans10=SI.map((val,i)=>{
-            return eval(
-                setSIUnits(i,11)+
-                units+consts+
-                cleanedformula);
-        } );
-        console.log(ans2)
         
-        let exp=ans10.map((val,i)=>{
-            return Math.log(val/ans)/10;
-        })
-        console.log(exp)
-      
+            let ans2=SI.map((val,i)=>{
+                return eval(
+                    setSIUnits(i,2)+
+                    units+consts+
+                    cleanedformula);
+            } );
+            let ans10=SI.map((val,i)=>{
+                return eval(
+                    setSIUnits(i,11)+
+                    units+consts+
+                    cleanedformula);
+            } );
 
-        let error=false;
-    
-        for(i in exp){
-            if(isNaN(exp[i])){
-                error=true;
-                break;
-            }
-            if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
-                error=true;
-                break;
-            }
-        }
+            console.log(ans2)
+            
+            let exp=ans10.map((val,i)=>{
+                return Math.log(val/ans)/10;
+            })
+            console.log(exp)
         
-        if(!error){
-            let res=exp.reduce((accu, val, i)=>{
-                console.log(i+":"+val)
-                if(Math.abs(val)<=1e-15) return accu;
-                let up=unitPow(-val,i);
-                if(up!="") accu[2]++;
-                return [accu[0]+unitPow(val,i),accu[1]+up,accu[2]]
-            },["","",0])
-            if(res[1]=="") return [false,res[0]];
-            else if(res[2]>1) return [false,res[0]+"/ ( "+res[1]+") "];
-            else return [false,res[0]+"/ "+res[1]]; 
-        }else return [true,0];
+
+            let error=false;
+        
+            for(i in exp){
+                if(isNaN(exp[i])){
+                    error=true;
+                    break;
+                }
+                if(Math.abs(exp[i]-Math.round(exp[i]))>1e-15){
+                    error=true;
+                    break;
+                }
+            }
+            
+            if(!error){
+                let res=exp.reduce((accu, val, i)=>{
+                    console.log(i+":"+val)
+                    if(Math.abs(val)<=1e-15) return accu;
+                    let up=unitPow(-val,i);
+                    if(up!="") accu[2]++;
+                    return [accu[0]+unitPow(val,i),accu[1]+up,accu[2]]
+                },["","",0])
+                if(res[1]=="") return [false,res[0]];
+                else if(res[2]>1) return [false,res[0]+"/ ( "+res[1]+") "];
+                else return [false,res[0]+"/ "+res[1]]; 
+            }else return [true,0];
+        }catch(error){
+            eval(
+                setSIUnitsTo1()+
+                units+consts
+            );
+            console.log(setSIUnitsTo1()+
+                units+consts)
+            return [false,0];
+        }
       
     }
 
@@ -690,6 +700,12 @@
                 console.log('Calculation result:', answer); // Debug log
                 return true;
             } catch (error) {
+                eval(
+                    setSIUnitsTo1()+
+                    units+consts
+                );
+                console.log(setSIUnitsTo1()+
+                    units+consts)
                 if(error=="ReferenceError: x is not defined"){
                     plotmode=true;
                     plot()
