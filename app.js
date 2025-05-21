@@ -279,7 +279,7 @@
     function plot(){
         if(!plotmode) return;
         document.getElementById("plot").innerHTML = ""; 
-        
+        setSIUnitsTo1();
         let contentsBounds = document.getElementById("plot").getBoundingClientRect();
         console.log(contentsBounds)
         let width = 800;
@@ -690,16 +690,21 @@
                 console.log('Calculation result:', answer); // Debug log
                 return true;
             } catch (error) {
-                screen.value+=")";
-                if (iter <10) {
-                    let thisinput=lastinput.pop();
-                    if(equalButton(iter+1)) return true;
-                    lastinput.push(thisinput);
+                if(error=="ReferenceError: x is not defined"){
+                    plotmode=true;
+                    plot()
+                }else{
+                    screen.value+=")";
+                    if (iter <10) {
+                        let thisinput=lastinput.pop();
+                        if(equalButton(iter+1)) return true;
+                        lastinput.push(thisinput);
+                    }
+                    screen.value = "Error: "+error;
+                    screen.focus();
+                    screen.select();
+                    console.log('Calculation error:', error); // Debug log
                 }
-                screen.value = "Error"+error;
-                screen.focus();
-                screen.select();
-                console.log('Calculation error:', error); // Debug log
             }
         }
         screen.focus();
