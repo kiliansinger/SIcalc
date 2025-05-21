@@ -18,6 +18,7 @@ const FILES_TO_CACHE = [
   "./app.js",
   "./style.css",
   "./manifest.json",
+  "./function-plot.js",
   "./images/favicon.png",
   "./images/icons/icon-32x32.png",
   "./images/icons/icon-128x128.png",

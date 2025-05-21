@@ -311,6 +311,7 @@
             });
     }
     function handle(event) { 
+        event.preventDefault();//prevents reloading of page
         convertbuttontoggle++;
         if(convertbuttontoggle==4) convertbuttontoggle=0;
         equalButton();
