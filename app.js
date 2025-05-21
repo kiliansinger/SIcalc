@@ -238,23 +238,30 @@
     function treatfac(s){
         let ret=""
         let i,j;
-        for (i = 0; i < s.length; ++i) {
+
+        ret=s;
+        for (i = 0; i < ret.length; ++i) {
             
-            if(s[i]=="!"){
+            if(ret[i]=="!"){
                 let bracnt=0;
                 let rest="";
                 for (j = i-1; j>=0; --j){
-                    if(!isAlphaNumeric(s[j])){
-                        if(s[j]==")") bracnt++;
-                        else if(bracnt>0 && s[j]=="(") bracnt--;
+                    if(!isAlphaNumeric(ret[j])){
+                        if(ret[j]==")") bracnt++;
+                        else if(bracnt>0 && ret[j]=="(") bracnt--;
                         else if(bracnt==0) break;
                     }
-                    rest=s[j]+rest;
+                    rest=ret[j]+rest;
+                    //console.log("rest:"+rest)
                 }
-                ret=ret.substring(0,j+1)+"fac("+rest+")";
+                ret=ret.substring(0,j+1)+"fac("+rest+")"+ret.substring(j+2+rest.length);
+                
+                i+=4;
+                //console.log(ret);
                 continue
             }
-            ret+=s[i];
+            //ret+=s[i];
+            //console.log(ret.substring(0,i));
         }
         return ret;
     }
