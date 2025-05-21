@@ -677,6 +677,8 @@
                 return cleanedformula;
     }
     function equalButton(iter) {
+        sol=screen.value;//we need this in case we press eq and x is entered such that input stays active
+
         if(iter===undefined) iter=0;
        
         console.log('Equal button clicked'); // Debug log
@@ -708,7 +710,7 @@
                     units+consts)
                 if(error=="ReferenceError: x is not defined"){
                     plotmode=true;
-                    plot()
+                    plot();
                 }else{
                     screen.value+=")";
                     if (iter <10) {
