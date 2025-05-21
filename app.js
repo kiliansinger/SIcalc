@@ -1,6 +1,6 @@
 
 
-(function() {
+//(function() {
     let SI=["kg","A","m","s","mol","K","cd"];
     function setSIUnits(pos,exp){
         let s="";
@@ -364,7 +364,7 @@
             if(hyp.className == "btn-hyp-active"){
                 if(inv.className == "btn-2nd") {//2nd not pressed while hyp is active
                     value = e.target.dataset.numh;
-                    if(value!="sinh" && value !="cosh" && value!="tanh" && value !="asinh" && value != "acosh" && value != "atanh"){
+                    if(value!=',' && value!=" x " && value!="sinh" && value !="cosh" && value!="tanh" && value !="asinh" && value != "acosh" && value != "atanh"){
                         killnextleadingspace=true;
                         thistime=false;
                     }
@@ -489,8 +489,38 @@
                             screen.focus();
                         }
                         break;
+                    case "_plot":{
+                        let contentsBounds = document.body.getBoundingClientRect();
+                        let width = 800;
+                        let height = 500;
+                        let ratio = contentsBounds.width / width;
+                        width *= ratio;
+                        height *= ratio;
+                        let form=cleanformula();
+                        functionPlot({
+                            target: "#plot",
+                            width,
+                            height,
+                            yAxis: { domain: [-5, 5] },
+                            grid: true,
+                            data: form.split(',').map((val)=>
+                                {  
+                                    return {
+                                        graphType: 'polyline',
+                                        fn: function (scope) {
+                                            // scope.x = Number
+                                            var x = scope.x;
+                                            return eval(val);
+                                        }
+                                    }
+                                })
 
+                            });
+                        }
+                        break;
                     case "_EQ":
+                        document.getElementById("plot").innerHTML = ""; 
+        
                         if(lastbutton!="_EQ") convertbuttontoggle=1;
                         else {
                             convertbuttontoggle++;
@@ -574,18 +604,10 @@
         else hyp.className="btn-hyp";
         screen.focus();
     });
-    function equalButton(iter) {
-        if(iter===undefined) iter=0;
-       
-        console.log('Equal button clicked'); // Debug log
-        if (screen.value === '') {
-            screen.value = "Please use buttons or keyboard";
-            screen.focus();
-            screen.select();
-        } else {
-            try {
-                //screen.value=screen.value.replaceAll(" ","*");
+    function cleanformula(){
+         //screen.value=screen.value.replaceAll(" ","*");
                 //replace all functions by lowercase;
+                let inp=screen.value;
                 screen.value=screen.value.replace(/sin/ig, 'sin')
                 screen.value=screen.value.replace(/cos/ig, 'cos')
                 screen.value=screen.value.replace(/tan/ig, 'tan')
@@ -618,6 +640,7 @@
                 screen.value=screen.value.replace(/\s*-\s*/g, '-')
                 screen.value=screen.value.replace(/\s*\!/g, '!')
                 screen.value=screen.value.replace(/\s*\^\s*/g, '^')
+                screen.value=screen.value.replace(/\s*,\s*/g, ',')
                 //replace spaces with *
                 screen.value=screen.value.replace(/\s+/g, '*');
                 lastinput.push(screen.value);
@@ -626,8 +649,22 @@
                 screen.value=screen.value.replace(/\%/g, 'e-2')
                 screen.value=screen.value.replace(/\^/g, '**')
                 screen.value=treatfac(screen.value)
-                cleanedformula=screen.value;
+                let cleanedformula=screen.value;
                 cleanedformula=cleanedformula.replace(/\**\?/g, '');//erase *?
+                screen.value=inp;
+                return cleanedformula;
+    }
+    function equalButton(iter) {
+        if(iter===undefined) iter=0;
+       
+        console.log('Equal button clicked'); // Debug log
+        if (screen.value === '') {
+            screen.value = "Please use buttons or keyboard";
+            screen.focus();
+            screen.select();
+        } else {
+            try {
+                cleanedformula=cleanformula();
                 console.log("cleaned formula:"+cleanedformula);
                 let answer = eval(
                     setSIUnitsTo1()
@@ -669,4 +706,4 @@
         screen.setRangeText("", start-1, end);
         screen.focus();
     }
-})();
+//})();

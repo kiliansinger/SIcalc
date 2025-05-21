@@ -27,8 +27,10 @@ input[type = 'search']::-webkit-search-cancel-button{
     pointer-events:none;
     
 }
+#plot{
+    background:white;
+}
 body{
-
     background:black;
     justify-content: center;
     align-items: center;
