@@ -271,8 +271,44 @@
     let convertbuttontoggle=0;
     let killleadingspace=false;
     let killnextleadingspace=false;
+    let plotmode=false;
     form.addEventListener('submit',handle);
+    window.addEventListener("resize", ()=>{
+        plot();
+    });
+    function plot(){
+        if(!plotmode) return;
+        document.getElementById("plot").innerHTML = ""; 
+        
+        let contentsBounds = document.getElementById("plot").getBoundingClientRect();
+        console.log(contentsBounds)
+        let width = 800;
+        let height = 500;
+        let ratio = contentsBounds.width / width;
+        width *= ratio;
+        height *= ratio;
+        let form=cleanformula();
+        functionPlot({
+            title: screen.value,
+            target: "#plot",
+            width,
+            height,
+            yAxis: { domain: [-5, 5] },
+            grid: true,
+            data: form.split(',').map((val)=>
+                {  
+                    return {
+                        graphType: 'polyline',
+                        fn: function (scope) {
+                            // scope.x = Number
+                            var x = scope.x;
+                            return eval(val);
+                        }
+                    }
+                })
 
+            });
+    }
     function handle(event) { 
         convertbuttontoggle++;
         if(convertbuttontoggle==4) convertbuttontoggle=0;
@@ -490,37 +526,13 @@
                         }
                         break;
                     case "_plot":{
-                        let contentsBounds = document.body.getBoundingClientRect();
-                        let width = 800;
-                        let height = 500;
-                        let ratio = contentsBounds.width / width;
-                        width *= ratio;
-                        height *= ratio;
-                        let form=cleanformula();
-                        functionPlot({
-                            target: "#plot",
-                            width,
-                            height,
-                            yAxis: { domain: [-5, 5] },
-                            grid: true,
-                            data: form.split(',').map((val)=>
-                                {  
-                                    return {
-                                        graphType: 'polyline',
-                                        fn: function (scope) {
-                                            // scope.x = Number
-                                            var x = scope.x;
-                                            return eval(val);
-                                        }
-                                    }
-                                })
-
-                            });
+                            plotmode=true;
+                            plot();
                         }
                         break;
                     case "_EQ":
                         document.getElementById("plot").innerHTML = ""; 
-        
+                        plotmode=false;
                         if(lastbutton!="_EQ") convertbuttontoggle=1;
                         else {
                             convertbuttontoggle++;
@@ -698,6 +710,8 @@
         console.log('Clear button clicked'); // Debug log
         screen.value = "";
         screen.focus();
+        plotmode=false;
+        document.getElementById("plot").innerHTML = ""; 
     }
   
    function backButton()  {
