@@ -124,6 +124,7 @@
     ftlb=1.35582*N*m;
     inlb=0.112985*N*m;
     cal=4.187*J;
+    PS=735.49875*W;
     `;
     for(i in SI){
         consts+=prefixUnits(SI[i])
@@ -141,17 +142,18 @@
     consts+=prefixUnits("mHg");
     consts+=prefixUnits("atm");
     consts+=prefixUnits("cal");
+    consts+=prefixUnits("PS");
 
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
         map(v=>v.replace(/ /g, '')).
         map((v)=>{return {key:calcUnit(v)[1],value:v}});
-    console.log(unitsarr)
+    //console.log(unitsarr)
     const unitsmap = new Map(unitsarr.map((obj) => [obj.key, obj.value]));
     for(i in unitsarr){
         consts+=prefixUnits(unitsarr[i].value);
     }
-    console.log(consts);
+    //console.log(consts);
     
     function fac(num)
     {
@@ -289,7 +291,7 @@
         if(!plotmode) return;
         document.getElementById("plot").innerHTML = ""; 
         let contentsBounds = document.getElementById("plot").getBoundingClientRect();
-        console.log(contentsBounds)
+        //console.log(contentsBounds)
         let width = 800;
         let height = 500;
         let ratio = contentsBounds.width / width;
@@ -363,12 +365,12 @@
                     cleanedformula);
             } );
 
-            console.log(ans2)
+            //console.log(ans2)
             
             let exp=ans10.map((val,i)=>{
                 return Math.log(val/ans)/10;
             })
-            console.log(exp)
+            //console.log(exp)
         
 
             let error=false;
@@ -386,7 +388,7 @@
             
             if(!error){
                 let res=exp.reduce((accu, val, i)=>{
-                    console.log(i+":"+val)
+                    //console.log(i+":"+val)
                     if(Math.abs(val)<=1e-15) return accu;
                     let up=unitPow(-val,i);
                     if(up!="") accu[2]++;
@@ -401,16 +403,16 @@
                 setSIUnitsTo1()+
                 units+consts
             );
-            console.log(setSIUnitsTo1()+
-                units+consts)
+            //console.log(setSIUnitsTo1()+
+            //    units+consts)
             return [false,0];
         }
       
     }
 
     // Log initial elements
-    console.log('Screen element:', screen);
-    console.log('Buttons:', buttons);
+    //console.log('Screen element:', screen);
+    //console.log('Buttons:', buttons);
     inv.className = "btn-2nd";
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
@@ -584,7 +586,7 @@
                 lastbutton=value;
                 return;
             }
-            console.log('Button clicked:', value); // Debug log
+            //console.log('Button clicked:', value); // Debug log
             if (value !== undefined) { // Ensure value is not undefined
                 if((screen.value.endsWith(" ")||
                     screen.value.endsWith("(")||
@@ -594,7 +596,6 @@
                     screen.value.endsWith("-")||
                     killleadingspace ||
                     screen.value=="") && value.startsWith(" ")) {
-                        console.log("kill")
                         if(killleadingspace) killleadingspace=false;
                         const [start, end] = [screen.selectionStart, screen.selectionEnd];
                         screen.setRangeText(value.substring(1), start, end);
@@ -610,7 +611,7 @@
                     screen.selectionStart=screen.selectionEnd
                     screen.focus();
                 }
-                console.log('Screen value:', screen.value); // Debug log
+                //console.log('Screen value:', screen.value); // Debug log
                 lastbutton=value;
             }
         });
@@ -624,14 +625,14 @@
         screen.attributes["inputmode"].value="none";
     })
     inv.addEventListener('click', function(e) {
-        console.log('inv button clicked'+inv.className); // Debug log
+        //console.log('inv button clicked'+inv.className); // Debug log
         if(inv.className == "btn-2nd")  inv.className="btn-2nd-active";
         else inv.className="btn-2nd";
         screen.focus();
-        console.log('inv button clicked'+inv.className); // Debug log
+        //console.log('inv button clicked'+inv.className); // Debug log
     });
     hyp.addEventListener('click', function(e) {
-        console.log('hyp button clicked'+hyp.className); // Debug log
+        //console.log('hyp button clicked'+hyp.className); // Debug log
         if(hyp.className == "btn-hyp")  hyp.className="btn-hyp-active";
         else hyp.className="btn-hyp";
         screen.focus();
@@ -691,7 +692,7 @@
 
         if(iter===undefined) iter=0;
        
-        console.log('Equal button clicked'); // Debug log
+        //console.log('Equal button clicked'); // Debug log
         if (screen.value === '') {
             screen.value = "Please use buttons or keyboard";
             screen.focus();
@@ -699,7 +700,7 @@
         } else {
             try {
                 cleanedformula=cleanformula();
-                console.log("cleaned formula:"+cleanedformula);
+                //console.log("cleaned formula:"+cleanedformula);
                 let answer = eval(
                     setSIUnitsTo1()
                     +units+consts
@@ -709,15 +710,15 @@
                 else if(Math.abs(answer)>1e3 && convertbuttontoggle<2) answer=answer.toExponential()
                 screen.value = answer;
                 sol=screen.value;
-                console.log('Calculation result:', answer); // Debug log
+                //console.log('Calculation result:', answer); // Debug log
                 return true;
             } catch (error) {
                 eval(
                     setSIUnitsTo1()+
                     units+consts
                 );
-                console.log(setSIUnitsTo1()+
-                    units+consts)
+                //console.log(setSIUnitsTo1()+
+                 //   units+consts)
                 if(error=="ReferenceError: x is not defined"){
                     plotmode=true;
                     plot();
@@ -731,7 +732,7 @@
                     screen.value = "Error: "+error;
                     screen.focus();
                     screen.select();
-                    console.log('Calculation error:', error); // Debug log
+                    //console.log('Calculation error:', error); // Debug log
                 }
             }
         }
@@ -740,7 +741,7 @@
 
   
     function clearButton() {
-        console.log('Clear button clicked'); // Debug log
+        //console.log('Clear button clicked'); // Debug log
         screen.value = "";
         screen.focus();
         plotmode=false;
@@ -748,7 +749,7 @@
     }
   
    function backButton()  {
-        console.log('back button clicked'); // Debug log
+        //console.log('back button clicked'); // Debug log
         const [start, end] = [screen.selectionStart, screen.selectionEnd];
         screen.setRangeText("", start-1, end);
         screen.focus();
