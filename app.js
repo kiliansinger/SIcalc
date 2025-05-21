@@ -123,6 +123,7 @@
     kgfm=9.80665*N*m;
     ftlb=1.35582*N*m;
     inlb=0.112985*N*m;
+    cal=4.187*J;
     `;
     for(i in SI){
         consts+=prefixUnits(SI[i])
@@ -139,6 +140,7 @@
     consts+=prefixUnits("psi");
     consts+=prefixUnits("mHg");
     consts+=prefixUnits("atm");
+    consts+=prefixUnits("cal");
 
     let unitsarr=units.match(/(.*?)=/g).
         map(v=>v.replace(/=/g, '')).
