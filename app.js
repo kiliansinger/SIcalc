@@ -730,6 +730,7 @@
                         lastinput.push(thisinput);
                     }
                     screen.value = "Error: "+error;
+                    sol=screen.value;
                     screen.focus();
                     screen.select();
                     //console.log('Calculation error:', error); // Debug log
