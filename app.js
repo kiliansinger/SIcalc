@@ -176,6 +176,9 @@
             case "GRA": return val*200/Math.PI;
         }
     }
+    function exp(val){     
+        return Math.exp(val);
+    }
     function sin(val){     
         return Math.sin(convertDRG(val));
     }
