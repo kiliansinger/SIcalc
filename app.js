@@ -728,9 +728,10 @@
                         let thisinput=lastinput.pop();
                         if(equalButton(iter+1)) return true;
                         lastinput.push(thisinput);
+                    }else{
+                        sol="Error: "+error;
                     }
                     screen.value = "Error: "+error;
-                    sol=screen.value;
                     screen.focus();
                     screen.select();
                     //console.log('Calculation error:', error); // Debug log
