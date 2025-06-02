@@ -1,6 +1,8 @@
 
 
 //(function() {
+//https://asciimath.org/
+//https://github.com/oerpub/mathconverter
     let SI=["kg","A","m","s","mol","K","cd"];
     function setSIUnits(pos,exp){
         let s="";
@@ -420,6 +422,10 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
+            const event = new Event("input");
+            // Dispatch the event.
+            var demoSource = document.getElementById('demoSource')
+            demoSource.dispatchEvent(event);
             let value=undefined;
             let thistime=true;
             if(hyp.className == "btn-hyp-active"){

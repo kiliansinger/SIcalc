@@ -22,15 +22,37 @@
 	<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 	<meta http-equiv="Cache-control" content="no-cache">
 	<meta http-equiv="Cache-control" content="no-store">
+    <script>
+		window.MathJax = {
+				"fast-preview": {
+       					disabled: true
+				},
+				AuthorInit: function() {
+					MathJax.Hub.Register.StartupHook('End', function() {
+						MathJax.Hub.processSectionDelay = 0
+						var demoSource = document.getElementById('demoSource')
+						var demoRendering = document.getElementById('demoRendering')
+						var math = MathJax.Hub.getAllJax('demoRendering')[0]
+						demoSource.addEventListener('input', function() {
+							MathJax.Hub.Queue(['Text', math, demoSource.value])
+						})
+					})
+				}
+			}
+	</script>
+	<script async
+	src="./mathjax/latest.js?config=AM_CHTML-full">
+	</script>
 
 </head>
 <body> 
     <noscript>
 		<div>Oops! Javascript required here! Allow it and try again!</div>
 	</noscript>
+
     <script src="./function-plot.js"></script><!--https://mauriciopoppe.github.io/function-plot/ -->
 	<script>
-        let serviceworkeractivate=true;
+        let serviceworkeractivate=false;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {
@@ -40,11 +62,16 @@
 		}
 
 	</script>
+    
+    <div  id="demoRendering">
+        `sum_(i=1)^n i^3=((n(n+1))/2)^2`
+    </div>
+
     <div id="plot"></div>
     <section class="topdisplay">
         <p class="DRG">RAD</p>
         <form name="inputform">
-            <input inputmode='none' type ="search" class="screen">
+            <input id="demoSource" inputmode='none' type ="search" class="screen">
         </form>
     </section>
     <section class="keyboard">
