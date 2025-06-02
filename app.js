@@ -345,6 +345,10 @@
             screen.focus();
             screen.select();
         }
+        const event2 = new Event("input");
+        // Dispatch the event.
+        var demoSource = document.getElementById('demoSource')
+        demoSource.dispatchEvent(event2);
     } 
     function unitPow(val,i){
         if(val<0) return "";
@@ -422,10 +426,6 @@
     hyp.className = "btn-hyp";
     buttons.forEach(function(button) {
         button.addEventListener('click', function(e) {
-            const event = new Event("input");
-            // Dispatch the event.
-            var demoSource = document.getElementById('demoSource')
-            demoSource.dispatchEvent(event);
             let value=undefined;
             let thistime=true;
             if(hyp.className == "btn-hyp-active"){
@@ -591,10 +591,15 @@
                     default:
                         alert("unimplemented "+value)
                 }
+                const event = new Event("input");
+                // Dispatch the event.
+                var demoSource = document.getElementById('demoSource')
+                demoSource.dispatchEvent(event);
                 screen.focus();
                 lastbutton=value;
                 return;
             }
+           
             //console.log('Button clicked:', value); // Debug log
             if (value !== undefined) { // Ensure value is not undefined
                 if((screen.value.endsWith(" ")||
@@ -623,6 +628,10 @@
                 //console.log('Screen value:', screen.value); // Debug log
                 lastbutton=value;
             }
+            const event = new Event("input");
+            // Dispatch the event.
+            var demoSource = document.getElementById('demoSource')
+            demoSource.dispatchEvent(event);
         });
     });//end of buttons.forEach(function(button)
     //needs to come after the above buttons.forEach(function(button)...
