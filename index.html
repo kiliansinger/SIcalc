@@ -34,14 +34,15 @@
 						var demoRendering = document.getElementById('demoRendering')
 						var math = MathJax.Hub.getAllJax('demoRendering')[0]
 						demoSource.addEventListener('input', function() {
-							MathJax.Hub.Queue(['Text', math, demoSource.value])
+							MathJax.Hub.Queue(['Text', math, demoSource.value.replaceAll(" ","\quad")])
 						})
 					})
 				}
 			}
 	</script>
+    <!--mathjax 2.7.4-->
 	<script async
-	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML-full">
+	src="./mathjax/latest.js?config=AM_CHTML-full">
 	</script>
 
 </head>
@@ -51,8 +52,9 @@
 	</noscript>
 
     <script src="./function-plot.js"></script><!--https://mauriciopoppe.github.io/function-plot/ -->
-	<script>
-        let serviceworkeractivate=false;
+	
+    <script>
+        let serviceworkeractivate=true;
 		if (serviceworkeractivate && "serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker.register("./service-worker.js").then((reg) => {

@@ -3,6 +3,8 @@
 //(function() {
 //https://asciimath.org/
 //https://github.com/oerpub/mathconverter
+//https://docs.mathjax.org/en/latest/input/asciimath.html
+
     let SI=["kg","A","m","s","mol","K","cd"];
     function setSIUnits(pos,exp){
         let s="";
